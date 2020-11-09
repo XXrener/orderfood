@@ -1,20 +1,23 @@
-import axios from 'axios'
+import axiosConfig from 'axios'
 // import baseURL from './baseUrl'
 
 
 // 默认配置
-axios.defaults.timeout = 10000;//超时
-// axios.defaults.baseURL = baseURL;//默认地址
+const baseUrl = 'http://a.itying.com/api/'
+axiosConfig.defaults.timeout = 10000;//超时
+axiosConfig.defaults.baseURL = baseUrl;//默认地址
 
 //数据转换
-axios.defaults.transformRequest = function (data){
+axiosConfig.defaults.transformRequest = function (data){
     data = JSON.stringify(data)
     return data;
 }
 
+// 方法
+
 //路由请求拦截
 // request 拦截器
-axios.interceptors.request.use(
+axiosConfig.interceptors.request.use(
     config =>{
         config.headers['Content-Type']= 'application/json;charset=UTF-8';
         return config;
@@ -27,7 +30,7 @@ axios.interceptors.request.use(
 
 // / 路由响应拦截
 // http response 拦截器
-axios.interceptors.response.use(
+axiosConfig.interceptors.response.use(
   response => {
         console.log(response,"拦截器")
         return    
@@ -35,4 +38,4 @@ axios.interceptors.response.use(
   error => {
     return Promise.reject(error.response)   // 返回接口返回的错误信息
   });
-export default axios
+export default axiosConfig

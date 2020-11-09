@@ -11,8 +11,10 @@
 
       <div class="satart_list">
         <ul class="use_list">
-          <li><span>1人</span></li>
-          <li><span>2人</span></li>
+          <li v-for="num in nums" :key="num" @click="maxplayers(num)">
+            <span>{{num}}</span>
+          </li>
+          <!-- <li><span>2人</span></li>
           <li><span>3人</span></li>
           <li><span>4人</span></li>
           <li><span>5人</span></li>
@@ -22,7 +24,7 @@
           <li><span>9人</span></li>
           <li><span>10人</span></li>
           <li><span>11人</span></li>
-          <li><span>12人</span></li>
+          <li><span>12人</span></li> -->
         </ul>
       </div>
       <div id="begin" class="satart">
@@ -42,8 +44,17 @@ export default {
     return {
       msg: "开始组件挂载",
       urlcanju,
-    };
+      selections:false,
+      nums:[1,2,3,4,5,6,7,8,9,10,11,12]
+    }
   },
+  methods:{
+    maxplayers(id){
+      // this.selections = true
+      $('span').nthChild(id).backGroundColor='red'
+        console.log(id)
+    }
+  }
 };
 </script>
 
@@ -97,8 +108,14 @@ export default {
       width: 25%;
       padding: 0.5rem;
       box-sizing: border-box; /*盒子的宽度=盒子本身宽度    默认 盒子的宽度=盒子的宽度+padding+border*/
-
+     &.selections{
+       span{
+         background-color: #be0303;
+       }
+      }
       span {
+         
+
         display: block;
 
         width: 100%;

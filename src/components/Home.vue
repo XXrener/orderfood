@@ -38,423 +38,24 @@
 
     <!-- 内容区 -->
     <div class="content">
-      <div class="item">
-        <h3 class="item_cate">特色粥类</h3>
+      <div class="item" v-for=" (item,index) in listData" :key="index">
+        <h3 class="item_cate">
+            {{item.title}}
+        </h3>
 
         <ul class="item_list">
-          <li>
+          <li  v-for=" food in item.list" :key="food.id">
             <router-link to="pcontent">
               <div class="inner">
-                <img src="../assets/images/imgz/z1.jpg" alt />
-                <p class="title">精制虾仁粥</p>
+                <img :src="'http://a.itying.com/api/productlist/'+food.img_url" alt />
+                <p class="title">{{food.title}}</p>
                 <p class="price">
-                  <span>￥</span>24
+                  <span>￥</span>{{food.price}}
                 </p>
               </div>
             </router-link>
           </li>
 
-          <li>
-            <router-link to="pcontent">
-              <div class="inner">
-                <img src="../assets/images/imgz/z2.jpg" alt />
-                <p class="title">咸菜皮蛋粥</p>
-                <p class="price">
-                  <span>￥</span>12
-                </p>
-              </div>
-            </router-link>
-          </li>
-          <li>
-            <router-link to="pcontent">
-              <div class="inner">
-                <img src="../assets/images/imgz/z3.jpg" alt />
-                <p class="title">秘制八宝粥</p>
-                <p class="price">
-                  <span>￥</span> 16
-                </p>
-              </div>
-            </router-link>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgz/z4.jpg" alt />
-              <p class="title">青菜瘦肉粥</p>
-              <p class="price">
-                <span>￥</span>21
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgz/z5.jpg" alt />
-              <p class="title">特制小米粥</p>
-              <p class="price">
-                <span>￥</span>15
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgz/z6.jpg" alt />
-              <p class="title">生滚鲍鱼粥</p>
-              <p class="price">
-                <span>￥</span>168
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgz/z7.jpg" alt />
-              <p class="title">上等紫薯粥</p>
-              <p class="price">
-                <span>￥</span>17
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgz/z8.jpg" alt />
-              <p class="title">特补海鲜粥</p>
-              <p class="price">
-                <span>￥</span>138
-              </p>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="item">
-        <h3 class="item_cate">各色小炒</h3>
-
-        <ul class="item_list">
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c1.jpg" alt />
-              <p class="title">秘制五花肉</p>
-              <p class="price">
-                <span>￥</span>67
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c2.jpg" alt />
-              <p class="title">特色酱香鸡煲</p>
-              <p class="price">
-                <span>￥</span>78
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c3.jpg" alt />
-              <p class="title">银丝炒肉</p>
-              <p class="price">
-                <span>￥</span>26
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c4.jpg" alt />
-              <p class="title">菜上长块叉烧</p>
-              <p class="price">
-                <span>￥</span>21
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c5.jpg" alt />
-              <p class="title">清炒猪肚皮</p>
-              <p class="price">
-                <span>￥</span>66
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c6.jpg" alt />
-              <p class="title">三鲜战肉丝</p>
-              <p class="price">
-                <span>￥</span>38
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c7.jpg" alt />
-              <p class="title">白灼大侠</p>
-              <p class="price">
-                <span>￥</span>68
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c8.jpg" alt />
-              <p class="title">酱爆小龙虾</p>
-              <p class="price">
-                <span>￥</span>128
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c9.jpg" alt />
-              <p class="title">酱爆鱿鱼丝</p>
-              <p class="price">
-                <span>￥</span>98
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c10.jpg" alt />
-              <p class="title">墨鱼干锅</p>
-              <p class="price">
-                <span>￥</span>119
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c11.jpg" alt />
-              <p class="title">黑椒骑士扒</p>
-              <p class="price">
-                <span>￥</span>229
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgc/c12.jpg" alt />
-              <p class="title">一肘定江山</p>
-              <p class="price">
-                <span>￥</span>158
-              </p>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="item">
-        <h3 class="item_cate">烤遍天下</h3>
-
-        <ul class="item_list">
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgs/s1.jpg" alt />
-              <p class="title">羊肠而过</p>
-              <p class="price">
-                <span>￥</span>3/串
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgs/s2.jpg" alt />
-              <p class="title">椒盐小河侠</p>
-              <p class="price">
-                <span>￥</span>6/串
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgs/s3.jpg" alt />
-              <p class="title">蜜蜜中翅</p>
-              <p class="price">
-                <span>￥</span>15/串
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgs/s4.jpg" alt />
-              <p class="title">青青焦了</p>
-              <p class="price">
-                <span>￥</span>2/串
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgs/s5.jpg" alt />
-              <p class="title">肉色清凉</p>
-              <p class="price">
-                <span>￥</span>7/串
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgs/s6.jpg" alt />
-              <p class="title">特制大香蕉</p>
-              <p class="price">
-                <span>￥</span>7/串
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgs/s7.jpg" alt />
-              <p class="title">过江猛耗</p>
-              <p class="price">
-                <span>￥</span>10/只
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgs/s8.jpg" alt />
-              <p class="title">手脚乱伸鱿</p>
-              <p class="price">
-                <span>￥</span>10/串
-              </p>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="item">
-        <h3 class="item_cate">奶奶相惜</h3>
-
-        <ul class="item_list">
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgn/n1.jpg" alt />
-              <p class="title">黑不溜秋奶茶</p>
-              <p class="price">
-                <span>￥</span>18
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgn/n2.jpg" alt />
-              <p class="title">加冰的奶茶</p>
-              <p class="price">
-                <span>￥</span>21
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgn/n3.jpg" alt />
-              <p class="title">淋上金粉的奶茶</p>
-              <p class="price">
-                <span>￥</span>28
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgn/n4.jpg" alt />
-              <p class="title">加了西米的奶茶</p>
-              <p class="price">
-                <span>￥</span>19
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgn/n5.jpg" alt />
-              <p class="title">麦麦奶茶</p>
-              <p class="price">
-                <span>￥</span>18
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgn/n6.jpg" alt />
-              <p class="title">拉花奶茶</p>
-              <p class="price">
-                <span>￥</span>31
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgn/n7.jpg" alt />
-              <p class="title">肥仔快乐水</p>
-              <p class="price">
-                <span>￥</span>8
-              </p>
-            </div>
-          </li>
-        </ul>
-      </div>
-
-      <div class="item">
-        <h3 class="item_cate">干杯BIBI</h3>
-
-        <ul class="item_list">
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgj/j1.jpg" alt />
-              <p class="title">丹顶鹤啤酒</p>
-              <p class="price">
-                <span>￥</span>12/扎
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgj/j2.jpg" alt />
-              <p class="title">拳拳到肉啤酒</p>
-              <p class="price">
-                <span>￥</span>12/瓶
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgj/j3.jpg" alt />
-              <p class="title">燕麦啤酒</p>
-              <p class="price">
-                <span>￥</span>18/扎
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgj/j4.jpg" alt />
-              <p class="title">飘零的雪花</p>
-              <p class="price">
-                <span>￥</span>6/瓶
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgj/j5.jpg" alt />
-              <p class="title">是啤酒就行</p>
-              <p class="price">
-                <span>￥</span>3/瓶
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgj/j6.jpg" alt />
-              <p class="title">贴英文的啤酒</p>
-              <p class="price">
-                <span>￥</span>33/瓶
-              </p>
-            </div>
-          </li>
-          <li>
-            <div class="inner">
-              <img src="../assets/images/imgj/j7.jpg" alt />
-              <p class="title">西安啤酒</p>
-              <p class="price">
-                <span>￥</span>8/瓶
-              </p>
-            </div>
-          </li>
         </ul>
       </div>
     </div>
@@ -488,7 +89,8 @@ import urlnavigation from "../assets/images/navigation.png";
 import navfooter from './bottomMenu/NavFooter'
 
 //请求
-// import axios from '../api/baseUrl'
+// import upload from '../api/upload'
+import axios from 'axios'
 
 export default {
   name: "home",
@@ -500,7 +102,9 @@ export default {
       urlsousou,
       urlnav,
       urlnavigation,
-      urlcart:require('../assets/images/cart.png')
+      urlcart:require('../assets/images/cart.png'),
+      listData:[],
+      selections:[]
     };
   },
   methods: {
@@ -533,7 +137,24 @@ export default {
 
   },
   mounted() {
-   
+     /*  upload.getOrder().then(res=>{
+        console.log(res,"主页数据")
+      }).catch(err=>{
+        console.log(err,"主页数据获取错误")
+      }) */
+      console.log(axios)
+      axios.get('/productlist')
+        .then(res =>{
+            console.log(res,"00000")
+          
+             this.listData = res.data.result;
+            
+             console.log(this.selections,"书记胡")
+           
+        })
+        .catch( err =>{
+            console.log(err,"ssssss")
+        })
   },
   components:{
     'v-navfooter':navfooter
