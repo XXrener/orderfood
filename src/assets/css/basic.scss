@@ -1,0 +1,100 @@
+@charset "utf-8";
+body, div, ul, li, ol, h1, h2, h3, h4, h5, h6, input, textarea, select, p, dl, dt, dd, a, img, button, form, table, th, tr, td, tbody, article, aside, details, figcaption, figure, footer, header, hgroup, menu, nav, section {
+    margin: 0;
+    padding: 0;
+}
+html{
+    font-size: 12px;   /* 根元素是10px;     16*62.5%=10  默认在pc端根元素会解析成12px    */
+}
+
+body {
+    font: 12px/1.2 'Microsoft YaHei','宋体', Tahoma, Arial, sans-serif;
+    color: #555;
+    background-color: #f1f1f1;
+}
+em, i {
+    font-style: normal;
+}
+ul,li{
+    list-style-type: none;
+}
+strong {
+    font-weight: normal;
+}
+.clearfix:after {
+    content: "";
+    display: block;
+    visibility: hidden;
+    height: 0;
+    clear: both;
+}
+/*** 字号统一尺寸***/
+p{
+    font-size: 1.5rem;
+}
+h2{
+    font-size: 2.5rem;
+}
+h3{
+    font-size: 2rem;
+}
+/*购物车*/
+.footer_cart{
+    
+    position: fixed;
+    bottom:.2rem;
+    right: .5rem;
+    // left: 77%;
+    // top: 82%;
+
+    width: 5rem;
+    height: 5rem;
+    background: #be070795;
+
+    text-align: center;
+
+    border-radius: 50%;
+
+    img{
+        width: 2rem;
+        height: 2rem;
+        margin-top: .1rem;
+    }
+
+    p{
+        // margin-top: -.2rem;
+        color: #ffffff;
+       
+    }
+}
+/*订单按钮*/ 
+.footer_books{
+
+    position: fixed;
+    bottom:0.2rem;
+    left: 50%;
+    margin-left: -2.5rem;
+    // left: 5%;
+    // top: 82%;
+
+    width: 5rem;
+    height: 5rem;
+    background: #99999990;
+
+    text-align: center;
+
+    border-radius: 50%;
+
+    img{
+        width: 2rem;
+        height: 2rem;
+
+        margin-top: .1rem;
+    }
+
+    p{  
+        // margin-top: -.1rem;
+        color: #ffffff;
+        
+    }
+}
