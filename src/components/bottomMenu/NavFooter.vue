@@ -12,18 +12,24 @@
     </div>
     <div class="footer_nav_show"> 
         <ul class="list"  >   
-          <li :class="{navShow:flag}">
-            <img :src="urlmenu" alt />
-            <p>菜单</p>
-          </li>
+         <router-link to="/home">
+             <li :class="{navShow:flag}">
+              <img :src="urlmenu" alt />
+              <p>菜单</p>
+              </li>
+         </router-link>
           
           <li :class="{navShow:flag}">
-            <img :src="urlcart" />
-            <p>购物车</p>
+            <router-link to="/cart">
+                <img :src="urlcart" />
+                 <p>购物车</p>
+            </router-link>
           </li>
-          <li :class="{navShow:flag}">
-            <img :src="urlorder" />
-            <p>订单</p>
+           <li :class="{navShow:flag}">
+              <router-link to="/order">
+                  <img :src="urlorder" />
+                    <p>订单</p>
+              </router-link>
           </li>
           <li :class="{navShow:flag}">
             <img :src="urlwallet" />
@@ -35,12 +41,6 @@
 </template>
 
 <script>
-// 图片引入
-// import urlcaidan from "../../assets/images/caidan.png";
-// import urlmenu from "../assets/images/menu.png"
-// import urlorder from "../assets/images/order.png"
-// import urlwallet from "../assets/images/wallet.png"
-// import urlclose from "../assets/images/close.png"
 export default {
   name: "navfooter",
   data() {

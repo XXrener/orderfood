@@ -14,17 +14,22 @@ Vue.use(VueAxios,axios)
 //jQuery
 import $ from 'jquery'
 
+// vuex
 Vue.config.productionTip = false
 Vue.config.devtools = process.env.NODE_ENV === 'development'
 
 
-//axios
-
-
 //scss全局
 import '@/assets/css/basic.scss'
+
+//vuex
+import store from './store/index'
+
+//  全局组件
 new Vue({
   render: h => h(App),
   router,
+  $,
+  store
 }).$mount('#app')
 // window.__VUE_DEVTOOLS_GLOBAL_HOOK__.Vue = app.constructor

@@ -19,18 +19,20 @@
       </nav>
     </header>
     <!-- 侧边栏分类菜单 -->
-    <aside class="left_cate" id="left_cate">
+    <aside class="left_cate" :class="{isCate:isShow}">
       <ul>
-        <li>精品粥类</li>
-        <li>精品小炒</li>
-        <li>精品烧烤</li>
-        <li>精品酒水</li>
-        <li>特色推荐</li>
-        <li>厨师长推荐</li>
+        <li v-for=" (items,index) in listData"
+           :key="index" 
+           :ref="[optionsMenu==index?'redColor':null]"
+           @click="locationMenu(index)"
+           :class="[optionsMenu==index?'redColor':null]">
+          {{items.title}}
+        </li>
+        
       </ul>
 
       <!-- 菜单按钮 -->
-      <div class="nav_cate" id="nav_cate">
+      <div class="nav_cate" @click="isShow=!isShow">
         <img :src="urlnav" />
         <p>菜单</p>
       </div>
@@ -38,14 +40,14 @@
 
     <!-- 内容区 -->
     <div class="content">
-      <div class="item" v-for=" (item,index) in listData" :key="index">
-        <h3 class="item_cate">
+      <div class="item" v-for=" (item,index) in listData" :key="index" >{{'order_'+index}}
+        <h3 class="item_cate" :ref="'order_'+index">
             {{item.title}}
         </h3>
 
         <ul class="item_list">
           <li  v-for=" food in item.list" :key="food.id">
-            <router-link to="pcontent">
+            <router-link to="pcontent/888">
               <div class="inner">
                 <img :src="'http://a.itying.com/api/productlist/'+food.img_url" alt />
                 <p class="title">{{food.title}}</p>
@@ -60,17 +62,12 @@
       </div>
     </div>
     <!-- 蒙版 -->
-    <div class="masking" id="masking"></div>
-
-    <!-- 定位按钮 导航 购物车 -->
-    <!-- <div class="footer_nav">
-      <img :src="urlnavigation" alt />
-      <p>导航</p>
-    </div> -->
-
+    <div :class="{masking:isShow}" @click="isShow=!isShow"></div>
     <div class="footer_cart">
-      <img :src="urlcart" alt />
-      <p>购物车</p>
+      <router-link to="/cart">
+        <img :src="urlcart" alt />
+        <p>购物车</p>
+      </router-link>
     </div>
     <v-navfooter></v-navfooter>
   </div>
@@ -104,57 +101,40 @@ export default {
       urlnavigation,
       urlcart:require('../assets/images/cart.png'),
       listData:[],
-      selections:[]
+      selections:[],
+      isShow:false,     //菜单显示
+      optionsMenu:0, //点击菜单
+      scroll:''
     };
   },
+  created(){
+    // window.addEventListener()
+  },
   methods: {
-    asideDomInit() {
-      var navCate = document.getElementById("nav_cate"); //菜单
-      var leftCate = document.getElementById("left_cate"); //分类列表
-      var masking = document.getElementById("masking"); //蒙版
-      var flag = true; //中间变量 通过真假 让同一次点击执行不同结果
-
-      masking.onclick = navCate.onclick = function () {
-        //蒙版点击事件与菜单按钮一同监听 并执行同一函数
-        // alert('1')
-
-        if (flag == true) {
-          flag = false;
-          leftCate.style.transform = "translate(0,0)";
-          masking.style.display = "block";
-
-          document.body.style.overflow = "hidden"; //通过设置滚动条隐藏 让其不能移动蒙版下面的内容区
-        } else {
-          flag = true;
-          leftCate.style.transform = "translate(-100%,0)";
-          masking.style.display = "none";
-
-          document.body.style.overflow = "auto"; //如果内容被修剪，则浏览器会显示滚动条以便查看其余的内容
-        }
-        console.log(flag);
-      };
+    locationMenu(uid){
+      this.optionsMenu=uid;
+      let srcoll = document.documentElement.scrollTop || document.body.scrollTop;
+      window.addEventListener('scroll',srcoll,true)
+      srcoll = this.$refs['order_'+uid][0].scrollTop
+      console.log(srcoll)
     },
+    muneScroll(){
+      this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
+      // console.log(this.scroll,"滚动条")
+     
+    }
 
   },
   mounted() {
-     /*  upload.getOrder().then(res=>{
-        console.log(res,"主页数据")
-      }).catch(err=>{
-        console.log(err,"主页数据获取错误")
-      }) */
       console.log(axios)
       axios.get('/productlist')
         .then(res =>{
-            console.log(res,"00000")
-          
              this.listData = res.data.result;
-            
-             console.log(this.selections,"书记胡")
-           
         })
         .catch( err =>{
             console.log(err,"ssssss")
-        })
+        }),
+        window.addEventListener('scroll', this.muneScroll,true)
   },
   components:{
     'v-navfooter':navfooter
@@ -176,25 +156,6 @@ export default {
 
     display: flex;
     border-radius: 0.5rem;
-
-    // .hlist{
-
-    //     flex: 1;
-    //     text-align: center;
-    //     padding-top: .2rem;
-    //     border-right: 1px solid #eee;
-
-    //     img{
-    //         width: 2rem;
-    //         height: 2rem;
-    //         margin: 0 auto;
-    //     }
-
-    //     &:last-child{
-
-    //         border-right: none;
-    //     }
-    // }
     nav {
       height: 4rem;
       width: 100%;
@@ -269,33 +230,36 @@ export default {
 
   .left_cate {
     /*css3运动  加过渡效果*/
-    transition: all 1s;
-
-    transform: translate(-100%, 0);
-
+    transition: all .6s;
+    &.isCate{
+      transform: translate(100%, 0);
+    }
+    
     z-index: 2;
-
     width: 6rem;
-
     height: 100%;
-
     position: fixed;
-
+    margin-left:-6rem;
     background: #eee;
     top: 0px;
     left: 0px;
 
     ul {
       position: absolute;
-
       height: 100%;
-      padding: 0.5rem;
-
+      padding: 12rem 0.5rem 0.5rem 0.5rem;
       z-index: 3;
-
       background: #eee;
       li {
-        line-height: 4.4rem;
+        &.redColor{
+          background-color: #4a4848;
+          color:#f1f1f1;
+          font-weight: 600;
+        }
+        text-align: center;
+        line-height: 2.4rem;
+        margin: 1.5rem 0;
+        border-radius: .3rem;
       }
     }
 
@@ -318,7 +282,7 @@ export default {
       img {
         width: 1.8rem;
 
-        height: 1.8rem;
+        height: 1.6rem;
 
         margin-left: 1rem;
 
@@ -327,8 +291,8 @@ export default {
       p {
         color: #fff;
         margin-left: 1rem;
-
         margin-top: -0.3rem;
+        font-size: 14px;
       }
     }
   }
@@ -347,8 +311,6 @@ export default {
 
     top: 0px;
     z-index: 1;
-
-    display: none;
   }
 }
 </style>

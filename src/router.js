@@ -52,6 +52,10 @@ const router = new VueRouter({
             component: Pcontent
         },
         {
+            path: '/pcontent/:id',
+            component: Pcontent
+        },
+        {
             path: '/search',
             component: Search,
             mate: {

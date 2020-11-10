@@ -190,15 +190,15 @@
     </div>
 
     <!-- 底部按钮 -->
-    <div class="footer_nav">
+    <!-- <div class="footer_nav">
       <img :src="urlnavigation" alt />
       <p>导航</p>
-    </div>
-
-    <div class="footer_books">
+    </div> -->
+    <BottomMenu></BottomMenu>
+    <!-- <div class="footer_books">
       <img :src="urlmenu" alt />
       <p>续单</p>
-    </div>
+    </div> -->
 
     <div class="footer_cart">
       <img :src="urlcart" alt />
@@ -214,6 +214,8 @@ import urlcart from "../assets/images/cart.png";
 import urlmenu from "../assets/images/menu.png";
 
 import urledit from "../assets/images/edit.jpg";
+// 组件
+import BottomMenu from './bottomMenu/NavFooter' 
 
 export default {
   name: "cart",
@@ -227,6 +229,9 @@ export default {
       urledit,
     };
   },
+  components:{
+    BottomMenu
+  }
 };
 </script>
 

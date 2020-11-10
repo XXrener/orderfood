@@ -11,8 +11,8 @@
 
       <div class="satart_list">
         <ul class="use_list">
-          <li v-for="num in nums" :key="num" @click="maxplayers(num)">
-            <span>{{num}}</span>
+          <li v-for="(num,index) in nums" :key="index" @click="maxplayers(index)">
+            <span :class="[select==index?'redColor':'']">{{num}}</span>
           </li>
           <!-- <li><span>2人</span></li>
           <li><span>3人</span></li>
@@ -38,6 +38,7 @@
 
 <script>
 import urlcanju from "../assets/images/canju.jpg";
+// import $ from 'jquery'
 export default {
   name: "satart",
   data() {
@@ -45,15 +46,20 @@ export default {
       msg: "开始组件挂载",
       urlcanju,
       selections:false,
-      nums:[1,2,3,4,5,6,7,8,9,10,11,12]
+      nums:[1,2,3,4,5,6,7,8,9,10,11,12],
+      select:0
     }
   },
   methods:{
-    maxplayers(id){
-      // this.selections = true
-      $('span').nthChild(id).backGroundColor='red'
-        console.log(id)
+    maxplayers(index){
+       this.select = index;
+       let uid = index +1;
+       this.$store.commit('tableprople',uid)
     }
+  },
+  mounted(){
+    // 初始化
+    this.maxplayers(0)
   }
 };
 </script>
@@ -108,13 +114,12 @@ export default {
       width: 25%;
       padding: 0.5rem;
       box-sizing: border-box; /*盒子的宽度=盒子本身宽度    默认 盒子的宽度=盒子的宽度+padding+border*/
-     &.selections{
-       span{
-         background-color: #be0303;
-       }
-      }
+    
       span {
-         
+          &.redColor{
+           background-color: #be0303;
+            color: white;
+          }
 
         display: block;
 

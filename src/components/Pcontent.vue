@@ -36,11 +36,11 @@
         <div class="cart">				
             <strong>数量:</strong>
             <div class="cart_num">
-              <div class="input_left">-</div>
+              <div class="input_left" @click="subtraction">-</div>
               <div class="input_center">
                   <input type="text"  readonly="readonly" value="1" name="num" id="num" />
               </div>
-              <div class="input_right">+</div>				      
+              <div class="input_right" @click="addition">+</div>				      
             </div>								
         
         </div>
@@ -57,6 +57,9 @@
             return{
                 msg:"开始组件挂载"
             }
+        },
+        mounted(){
+            console.log(this.$router,this.$route)
         }
     }
 </script>
