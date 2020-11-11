@@ -24,7 +24,7 @@
         <ul class="mark_list">
             <li ref="index" v-for=" (item,index) in taste" 
             :key="index" 
-            @click="tasteOptions(index)">						
+            @click="textOptions(index)">						
                 {{item}}
             </li>
            
@@ -57,15 +57,15 @@ export default {
   methods:{
     maxplayers(index){  //人数本地储存
        this.select = index;
-       let uid = index +1;
-       this.$store.commit('tableprople',uid)
+       let prople = index +1;
        this.p_num = this.$store.state.prople;
-       this.$store.commit('comment','a001')
+       this.$store.commit('tableprople',prople)
+       this.$store.commit('comment','lm01')
      
     },
     satartOrder(){
       axios.post('/addPeopleInfo',{
-        uid:'a001',                 
+        uid:this.$store.state.uid,                 
         p_num:this.select,
         p_mark:this.p_mark
       }).then(res =>{
@@ -77,7 +77,7 @@ export default {
         }
       })
     },
-    tasteOptions(index){  //口味选择
+    textOptions(index){  //口味选择
       let uid = index;
         this.p_mark += ' '+this.$refs.index[uid].innerHTML.trim()
         console.log(this.p_mark)
@@ -85,6 +85,7 @@ export default {
   },
   mounted(){
     // 初始化
+    window.localStorage.clear()
     this.maxplayers(0)
   }
 };

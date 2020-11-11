@@ -11,7 +11,8 @@ const store = new Vuex.Store({
     state:{
         uid:'',
         title:'',
-        price:''
+        price:'',
+        prople:0
 
     },
     mutations:{
@@ -19,7 +20,7 @@ const store = new Vuex.Store({
             state.prople = nums
         },
         comment(state,com){ 
-            state.pid = com
+            state.uid = com
         }
     }
  })

@@ -56,8 +56,7 @@
             }
         },
         mounted(){
-            
-            console.log(this.$route.query,"2222222222")
+
             let uid = this.$route.query;
             this.downLoadContent(uid)
         },
@@ -66,8 +65,7 @@
                 axios.get("/productcontent",{params:{id:uid.id}}).then(res =>{
                    
                     this.cartlist = res.data.result[0];
-                    console.log(this.cartlist,"0000000000")
-                    
+                   
                 }).catch( err =>{
                     console.log(err)
                 })
@@ -88,8 +86,9 @@
             */
            addCart(){
                //桌子号 二维码获取 暂定值
-               axios.post('/api/addcart',{
-                   uid:'a001',
+               console.log(this.$store.state.uid,"桌号")
+               axios.post('/addcart',{
+                   uid:this.$store.state.uid,
                    title:this.cartlist.title,
                    product_id:this.cartlist._id,
                    img_url:this.cartlist.img_url,

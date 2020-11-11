@@ -9,10 +9,10 @@ import VueAxios from 'vue-axios'
 const baseUrl = 'http://a.itying.com/api/'
 axios.defaults.timeout = 10000;//超时
 axios.defaults.baseURL = baseUrl;//默认地址
-axios.defaults.transformRequest = function (data){
+/* axios.defaults.transformRequest = function (data){
   data = JSON.stringify(data)
   return data;
-}
+} */
 Vue.use(VueAxios,axios)
 
 //jQuery

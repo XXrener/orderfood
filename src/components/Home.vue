@@ -40,8 +40,8 @@
 
     <!-- 内容区 -->
     <div class="content">
-      <div class="item" v-for=" (item,index) in listData" :key="index" >{{'order_'+index}}
-        <h3 class="item_cate" :ref="'order_'+index">
+      <div class="item" v-for=" (item,key) in listData" :key="key" :ref="key" >
+        <h3 class="item_cate" >
             {{item.title}}
         </h3>
 
@@ -64,7 +64,7 @@
     <!-- 蒙版 -->
     <div :class="{masking:isShow}" @click="isShow=!isShow"></div>
     <div class="footer_cart">
-      <span class="cartnum">{{cartNum}}</span>
+      <span class="cartnum" v-if="isShowCartNum">{{cartNum}}</span>
       <router-link to="/cart">
         <img :src="urlcart" alt />
         <p>购物车</p>
@@ -101,13 +101,15 @@ export default {
       urlnav,
       urlnavigation,
       urlcart:require('../assets/images/cart.png'),
+       api:config.api,  //图片拼接URL
       listData:[],
       selections:[],
       isShow:false,     //菜单显示
       optionsMenu:0, //点击菜单
       scroll:'',
-      api:config.api,
-      cartNum:0  //购物车数量
+     
+      cartNum:0 , //购物车数量
+    isShowCartNum:true //购物车数量显示
     };
   },
   created(){
@@ -116,14 +118,10 @@ export default {
   methods: {
     locationMenu(uid){
       this.optionsMenu=uid;
-      let srcoll = document.documentElement.scrollTop || document.body.scrollTop;
-      window.addEventListener('scroll',srcoll,true)
-      srcoll = this.$refs['order_'+uid][0].scrollTop
-      console.log(srcoll)
     },
     muneScroll(){
       this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
-      // console.log(this.scroll,"滚动条")
+      
      
     }
 
@@ -141,12 +139,19 @@ export default {
         window.addEventListener('scroll', this.muneScroll,true),
         //获取购物车数量列表
         //params:{ uid:'a001'} === /cartCount?uid=a001
+       /*  ,{
+         params:{ uid:this.$store.state.uid}
+        } */
         axios.get('/cartCount',{
-         params:{ uid:'a001'}
+          params:{uid:this.$store.state.uid}
         }).then(res=>{
           console.log(res,"获取购物车")
          if(res.data.result){
            this.cartNum = res.data.result
+
+           /* if(this.cartNum >= 0 ){
+              this.isShowCartNUm = true
+           } */
          }
         }).catch( err =>{
           console.log(err,"获取购物车失败")

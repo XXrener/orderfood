@@ -51,7 +51,7 @@
               <div class="cart_num">
                 <div class="input_left" @click="subtraction(item,index)">-</div>
                 <div class="input_center">
-                  <input type="text" readonly="readonly" v-model="item.num" value="" name="num" id="num" />
+                  <input type="text" readonly="readonly" v-model="item.num" value="" name="num" />
                 </div>
                 <div class="input_right" @click="addition(item)">+</div>
               </div>
@@ -222,7 +222,7 @@ export default {
     subtraction(item,index){
 
         axios.get('/api/decCart',{
-          params:{uid:'a001',product_id:item.product_id, num:item.num}
+          params:{uid:this.$store.state.uid,product_id:item.product_id, num:item.num}
           
          
           }).then(res=>{
@@ -246,7 +246,7 @@ export default {
 
       axios.get('/api/incCart',{
           params:{
-            uid:'a001',
+            uid:this.$store.state.uid,
           product_id:item.product_id, 
           num:item.num
           }   
@@ -266,8 +266,8 @@ export default {
     }
   },
   mounted(){
-    axios.get('/cartlist',{params:{uid:'a001'}}).then(res=>{
-      // console.log(res,"购物车专属也")
+    axios.get('/cartlist',{params:{uid:this.$store.state.uid}}).then(res=>{
+      
       if(res.data){
         this.cartList=res.data.result
         // console.log(this.cartList)
