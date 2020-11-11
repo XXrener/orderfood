@@ -14,23 +14,23 @@
           <li v-for="(num,index) in nums" :key="index" @click="maxplayers(index)">
             <span :class="[select==index?'redColor':'']">{{num}}</span>
           </li>
-          <!-- <li><span>2人</span></li>
-          <li><span>3人</span></li>
-          <li><span>4人</span></li>
-          <li><span>5人</span></li>
-          <li><span>6人</span></li>
-          <li><span>7人</span></li>
-          <li><span>8人</span></li>
-          <li><span>9人</span></li>
-          <li><span>10人</span></li>
-          <li><span>11人</span></li>
-          <li><span>12人</span></li> -->
         </ul>
       </div>
-      <div id="begin" class="satart">
-        <router-link to="/home">
+      <div class="mark_input">
+            <input type="text" v-model='p_mark' placeholder="请输入您的口味要求，忌口等（可不填）"/>
+        </div>
+
+        
+        <ul class="mark_list">
+            <li ref="index" v-for=" (item,index) in taste" 
+            :key="index" 
+            @click="tasteOptions(index)">						
+                {{item}}
+            </li>
+           
+        </ul>
+      <div id="begin" class="satart" @click="satartOrder">
           <span>开始点餐</span>
-        </router-link>
       </div>
     </div>
   </div>
@@ -39,6 +39,7 @@
 <script>
 import urlcanju from "../assets/images/canju.jpg";
 // import $ from 'jquery'
+import axios from 'axios'
 export default {
   name: "satart",
   data() {
@@ -47,14 +48,39 @@ export default {
       urlcanju,
       selections:false,
       nums:[1,2,3,4,5,6,7,8,9,10,11,12],
-      select:0
+      select:0,
+      taste:['打包带走','不要放辣椒','微辣'],
+      p_mark:'',
+      p_num:''
     }
   },
   methods:{
-    maxplayers(index){
+    maxplayers(index){  //人数本地储存
        this.select = index;
        let uid = index +1;
        this.$store.commit('tableprople',uid)
+       this.p_num = this.$store.state.prople;
+       this.$store.commit('comment','a001')
+     
+    },
+    satartOrder(){
+      axios.post('/addPeopleInfo',{
+        uid:'a001',                 
+        p_num:this.select,
+        p_mark:this.p_mark
+      }).then(res =>{
+
+        console.log(res)
+         if(res.data.success){
+
+          this.$router.push({ path: 'home' })
+        }
+      })
+    },
+    tasteOptions(index){  //口味选择
+      let uid = index;
+        this.p_mark += ' '+this.$refs.index[uid].innerHTML.trim()
+        console.log(this.p_mark)
     }
   },
   mounted(){
@@ -103,7 +129,62 @@ export default {
     margin: 1rem 0rem;
     font-size: 1rem;
   }
+    .mark_input{
+        padding: 1rem;
 
+        input{
+
+            height: 3rem;
+            line-height:3rem;
+
+            width:100%;
+            border:1px solid #eee;
+        }
+
+    }
+    .mark_list{
+        
+        display: flex;
+        
+        flex-wrap: wrap;
+        padding: .5rem;
+        
+        li{
+            
+             width: 25%;
+             padding: .5rem;             
+             box-sizing: border-box;   /*盒子的宽度=盒子本身宽度    默认 盒子的宽度=盒子的宽度+padding+border*/
+             
+             span{
+                 
+                 display: block;
+                 
+                 width: 100%;
+                 height: 3.2rem;
+                 
+                 line-height: 3.2rem;
+                 text-align: center;
+                 background: #fff;
+                 border-radius: .5rem;
+                 border: 1px solid #ccc;
+             }
+            
+        }
+
+        li.active{
+
+              span{
+                 
+                
+                 background: red;                 
+                 border: 1px solid red;
+
+                 color:#fff;
+             }
+        }
+        
+        
+    }
   .use_list {
     display: flex;
 
@@ -154,10 +235,7 @@ export default {
   background-image: radial-gradient(#f72323, #be0303, #f33737); //径向渐变
   color: #fff;
   
-  a {
-    color: #ffffff;
-    text-decoration: none;
-    cursor: pointer;
+ 
     span {
       display: block;
 
@@ -169,6 +247,6 @@ export default {
 
       top: 1.5rem;
     }
-  }
+  
 }
 </style>

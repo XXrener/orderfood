@@ -9,7 +9,7 @@ Vue.use(Vuex)
 const store = new Vuex.Store({
     plugins:[createPersistedState()],
     state:{
-        pid:'',
+        uid:'',
         title:'',
         price:''
 
@@ -17,6 +17,9 @@ const store = new Vuex.Store({
     mutations:{
         tableprople(state,nums){
             state.prople = nums
+        },
+        comment(state,com){ 
+            state.pid = com
         }
     }
  })

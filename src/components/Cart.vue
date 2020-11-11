@@ -9,7 +9,7 @@
           <div class="p_number_left">
             <p>
               用餐人数：
-              <span>2</span>
+              <span>{{allprople}}人</span>
             </p>
             <p>
               备注：
@@ -17,7 +17,7 @@
             </p>
           </div>
 
-          <div class="p_number_right">
+          <div class="p_number_right" @click="changeNum">
             <img :src="urledit" alt />
             <p>修改</p>
           </div>
@@ -26,74 +26,34 @@
         <div class="cart_num">
           <p>
             你购物车共
-            <span>6</span>个菜
+            <span>{{cartList.num}}</span>个菜
           </p>
           <p>
             合计：
-            <span>￥388</span>
+            <span>￥{{allResult}}</span>
           </p>
         </div>
       </div>
 
       <div class="cart_list">
-        <h2>本店推荐</h2>
+        <h2>详情</h2>
         <ul>
-          <li class="item">
+          <li class="item" v-for="(item,index) in cartList" :key="index">
             <div class="left_food">
               <img src="../assets/images/imgs/s8.jpg" />
               <div class="food_info">
-                <p>手脚乱伸鱿</p>
-                <p class="price">¥10/串</p>
+                <p>{{item.title}}</p>
+                <p class="price">￥{{item.price}}</p>
               </div>
             </div>
 
             <div class="right_cart">
               <div class="cart_num">
-                <div class="input_left">-</div>
+                <div class="input_left" @click="subtraction(item,index)">-</div>
                 <div class="input_center">
-                  <input type="text" readonly="readonly" value="1" name="num" id="num" />
+                  <input type="text" readonly="readonly" v-model="item.num" value="" name="num" id="num" />
                 </div>
-                <div class="input_right">+</div>
-              </div>
-            </div>
-          </li>
-
-          <li class="item">
-            <div class="left_food">
-              <img src="../assets/images/imgs/s5.jpg" />
-              <div class="food_info">
-                <p>肉色清凉</p>
-                <p class="price">¥7/串</p>
-              </div>
-            </div>
-
-            <div class="right_cart">
-              <div class="cart_num">
-                <div class="input_left">-</div>
-                <div class="input_center">
-                  <input type="text" readonly="readonly" value="1" name="num" id="num" />
-                </div>
-                <div class="input_right">+</div>
-              </div>
-            </div>
-          </li>
-
-          <li class="item">
-            <div class="left_food">
-              <img src="../assets/images/imgc/c4.jpg" />
-              <div class="food_info">
-                <p>菜上长块叉烧</p>
-                <p class="price">￥21</p>
-              </div>
-            </div>
-
-            <div class="right_cart">
-              <div class="cart_num">
-                <div class="input_left">-</div>
-                <div class="input_center">
-                  <input type="text" readonly="readonly" value="1" name="num" id="num" />
-                </div>
-                <div class="input_right">+</div>
+                <div class="input_right" @click="addition(item)">+</div>
               </div>
             </div>
           </li>
@@ -217,6 +177,7 @@ import urledit from "../assets/images/edit.jpg";
 // 组件
 import BottomMenu from './bottomMenu/NavFooter' 
 
+import axios from 'axios'
 export default {
   name: "cart",
   data() {
@@ -227,10 +188,94 @@ export default {
       urlcart,
       urlmenu,
       urledit,
+      cartList:'' //购物车列表
+      
+
     };
   },
   components:{
     BottomMenu
+  },
+  computed:{
+      allResult(){
+        let all=0;
+        for(var i = 0;i<this.cartList.length;i++){
+          console.log(this.cartList[i].price)
+          console.log(this.cartList[i].num)
+          all += parseFloat(this.cartList[i].price*this.cartList[i].num)
+          console.log(all)
+        }
+
+        return all;
+      },
+      allprople(){
+        return this.$store.state.prople
+      },
+      allcomment(){
+        return this.$store.state.uid
+      }
+  },
+  methods:{
+    changeNum(){
+      // console.log(this.state)
+    },
+    subtraction(item,index){
+
+        axios.get('/api/decCart',{
+          params:{uid:'a001',product_id:item.product_id, num:item.num}
+          
+         
+          }).then(res=>{
+          // console.log(res,"购物车专属也222222222")
+          if(res.data){
+            this.cartList=res.data.result
+            console.log(this.cartList)
+          }
+        }).catch(err =>{
+          console.log(err,"购物车专属错误也22222222")
+        })
+
+
+        if(item.num>1){
+          --item.num
+        }else{
+          this.cartList.splice(index,1)
+        }
+    },
+    addition(item){
+
+      axios.get('/api/incCart',{
+          params:{
+            uid:'a001',
+          product_id:item.product_id, 
+          num:item.num
+          }   
+         
+          }).then(res=>{
+          // console.log(res,"购物车专属也1111111111")
+          if(res.data){
+            this.cartList=res.data.result
+            console.log(this.cartList)
+          }
+        }).catch(err =>{
+          console.log(err,"购物车专属错误也1111111")
+        })
+
+
+      ++item.num
+    }
+  },
+  mounted(){
+    axios.get('/cartlist',{params:{uid:'a001'}}).then(res=>{
+      // console.log(res,"购物车专属也")
+      if(res.data){
+        this.cartList=res.data.result
+        // console.log(this.cartList)
+      }
+    }).catch(err =>{
+      console.log(err,"购物车专属错误也")
+    })
+    
   }
 };
 </script>

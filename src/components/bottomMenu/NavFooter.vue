@@ -130,7 +130,7 @@ export default {
       background: #000;
       text-align: center;
       border-radius: 50%;
-      transition:  all .6s linear;
+      transition:  all .4s linear;
       opacity: 0;
       img{
           width: 2rem;

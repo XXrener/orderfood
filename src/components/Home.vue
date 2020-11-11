@@ -47,9 +47,9 @@
 
         <ul class="item_list">
           <li  v-for=" food in item.list" :key="food.id">
-            <router-link to="pcontent/888">
+            <router-link :to="{name:'pcontent',query:{ id: food._id }}">
               <div class="inner">
-                <img :src="'http://a.itying.com/api/productlist/'+food.img_url" alt />
+                <img :src="api+food.img_url" alt />
                 <p class="title">{{food.title}}</p>
                 <p class="price">
                   <span>￥</span>{{food.price}}
@@ -64,6 +64,7 @@
     <!-- 蒙版 -->
     <div :class="{masking:isShow}" @click="isShow=!isShow"></div>
     <div class="footer_cart">
+      <span class="cartnum">{{cartNum}}</span>
       <router-link to="/cart">
         <img :src="urlcart" alt />
         <p>购物车</p>
@@ -86,7 +87,7 @@ import urlnavigation from "../assets/images/navigation.png";
 import navfooter from './bottomMenu/NavFooter'
 
 //请求
-// import upload from '../api/upload'
+import config from '../api/config'
 import axios from 'axios'
 
 export default {
@@ -104,7 +105,9 @@ export default {
       selections:[],
       isShow:false,     //菜单显示
       optionsMenu:0, //点击菜单
-      scroll:''
+      scroll:'',
+      api:config.api,
+      cartNum:0  //购物车数量
     };
   },
   created(){
@@ -127,6 +130,7 @@ export default {
   },
   mounted() {
       console.log(axios)
+      //获取菜品详情
       axios.get('/productlist')
         .then(res =>{
              this.listData = res.data.result;
@@ -134,7 +138,20 @@ export default {
         .catch( err =>{
             console.log(err,"ssssss")
         }),
-        window.addEventListener('scroll', this.muneScroll,true)
+        window.addEventListener('scroll', this.muneScroll,true),
+        //获取购物车数量列表
+        //params:{ uid:'a001'} === /cartCount?uid=a001
+        axios.get('/cartCount',{
+         params:{ uid:'a001'}
+        }).then(res=>{
+          console.log(res,"获取购物车")
+         if(res.data.result){
+           this.cartNum = res.data.result
+         }
+        }).catch( err =>{
+          console.log(err,"获取购物车失败")
+        })
+
   },
   components:{
     'v-navfooter':navfooter
@@ -197,13 +214,18 @@ export default {
     }
 
     .item_list {
+      
       display: flex;
 
       flex-wrap: wrap;
 
       padding: 0px 0.5rem;
+       a{
+        text-decoration: none;
+      }
 
       li {
+       
         width: 33.3%;
         padding: 0.5rem;
 
@@ -264,6 +286,7 @@ export default {
     }
 
     .nav_cate {
+      
       position: absolute;
 
       right: -3.5rem;
@@ -293,7 +316,30 @@ export default {
         margin-left: 1rem;
         margin-top: -0.3rem;
         font-size: 14px;
+        text-decoration: none;
       }
+    }
+  }
+  .footer_cart{
+    a{
+      text-decoration: none;
+    }
+    p{
+      text-decoration: none;
+    }
+    .cartnum{
+      background: #c50808;
+      font-size: 10px;
+      line-height: 1.8rem;
+      border-radius: 50%;
+      color: #fff;
+      // padding: .25rem;
+      width: 1.8rem;
+      height: 1.8rem;
+      text-align: center;
+      position: fixed;
+      right: .2rem;
+      bottom: 3.8rem;
     }
   }
 

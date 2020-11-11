@@ -12,6 +12,7 @@ const router = new VueRouter({
     mode:'history',
     routes:[
         {
+            name:"satart",
             path: '/satart',
             component: Satart,
             mate: {
@@ -19,7 +20,8 @@ const router = new VueRouter({
                 tier: 0
             }
         },
-        {
+        {   
+            name:'home',
             path: '/home',
             component: Home,
             mate: {
@@ -28,6 +30,7 @@ const router = new VueRouter({
             }
         },
         {
+            name:'cart',
             path: '/cart',
             component: Cart,
             mate: {
@@ -36,6 +39,7 @@ const router = new VueRouter({
             }
         },
         {
+            name:'hot',
             path: '/hot',
             component: Hot,
             mate: {
@@ -44,18 +48,21 @@ const router = new VueRouter({
             }
         },
         {
+            name:'order',
             path: '/order',
             component: Order
         },
         {
+            name:'pcontent',
             path: '/pcontent',
             component: Pcontent
         },
-        {
+        /* {
             path: '/pcontent/:id',
             component: Pcontent
-        },
+        }, */
         {
+            name:'search',
             path: '/search',
             component: Search,
             mate: {
