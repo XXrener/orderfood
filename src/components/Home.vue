@@ -19,7 +19,7 @@
       </nav>
     </header>
     <!-- 侧边栏分类菜单 -->
-    <aside class="left_cate" :class="{isCate:isShow}">
+    <aside class="left_cate" :class="{isCate:isShowmaSking}">
       <ul>
         <li v-for=" (items,index) in listData"
            :key="index" 
@@ -32,7 +32,7 @@
       </ul>
 
       <!-- 菜单按钮 -->
-      <div class="nav_cate" @click="isShow=!isShow">
+      <div class="nav_cate" @click="isShowmaSking=!isShowmaSking">
         <img :src="urlnav" />
         <p>菜单</p>
       </div>
@@ -61,8 +61,7 @@
         </ul>
       </div>
     </div>
-    <!-- 蒙版 -->
-    <div :class="{masking:isShow}" @click="isShow=!isShow"></div>
+   
     <div class="footer_cart">
       <span class="cartnum" v-if="isShowCartNum">{{cartNum}}</span>
       <router-link to="/cart">
@@ -70,7 +69,8 @@
         <p>购物车</p>
       </router-link>
     </div>
-    <v-navfooter></v-navfooter>
+    <NavFooter></NavFooter>
+    <Masking></Masking>
   </div>
 </template>
 
@@ -81,11 +81,6 @@ import urlsousou from "../assets/images/sousuo.png";
 
 import urlnav from "../assets/images/nav.png"; //底部三按钮
 import urlnavigation from "../assets/images/navigation.png";
-// import urlcart from "../assets/images/cart.png";
-
-//组件引入
-import navfooter from './bottomMenu/NavFooter'
-
 //请求
 import config from '../api/config'
 import axios from 'axios'
@@ -104,7 +99,7 @@ export default {
        api:config.api,  //图片拼接URL
       listData:[],
       selections:[],
-      isShow:false,     //菜单显示
+      isShowmaSking:false,     //菜单显示
       optionsMenu:0, //点击菜单
       scroll:'',
      
@@ -116,50 +111,11 @@ export default {
     // window.addEventListener()
   },
   methods: {
-    locationMenu(uid){
-      this.optionsMenu=uid;
-    },
-    muneScroll(){
-      this.scroll = document.documentElement.scrollTop || document.body.scrollTop;
-      
-     
-    }
+    
 
   },
   mounted() {
       console.log(axios)
-      //获取菜品详情
-      axios.get('/productlist')
-        .then(res =>{
-             this.listData = res.data.result;
-        })
-        .catch( err =>{
-            console.log(err,"ssssss")
-        }),
-        window.addEventListener('scroll', this.muneScroll,true),
-        //获取购物车数量列表
-        //params:{ uid:'a001'} === /cartCount?uid=a001
-       /*  ,{
-         params:{ uid:this.$store.state.uid}
-        } */
-        axios.get('/cartCount',{
-          params:{uid:this.$store.state.uid}
-        }).then(res=>{
-          console.log(res,"获取购物车")
-         if(res.data.result){
-           this.cartNum = res.data.result
-
-           /* if(this.cartNum >= 0 ){
-              this.isShowCartNUm = true
-           } */
-         }
-        }).catch( err =>{
-          console.log(err,"获取购物车失败")
-        })
-
-  },
-  components:{
-    'v-navfooter':navfooter
   }
 };
 </script>
@@ -348,20 +304,6 @@ export default {
     }
   }
 
-  /*透明层*/
-
-  .masking {
-    position: fixed;
-
-    width: 100%;
-    height: 100%;
-
-    background: rgba(132, 128, 128, 0.4);
-
-    left: 0px;
-
-    top: 0px;
-    z-index: 1;
-  }
+ 
 }
 </style>

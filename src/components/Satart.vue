@@ -39,7 +39,7 @@
 <script>
 import urlcanju from "../assets/images/canju.jpg";
 // import $ from 'jquery'
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   name: "satart",
   data() {
@@ -64,7 +64,8 @@ export default {
      
     },
     satartOrder(){
-      axios.post('/addPeopleInfo',{
+      this.$router.push({ path: 'home' })
+      /* axios.post('/addPeopleInfo',{
         uid:this.$store.state.uid,                 
         p_num:this.select,
         p_mark:this.p_mark
@@ -75,7 +76,7 @@ export default {
 
           this.$router.push({ path: 'home' })
         }
-      })
+      }) */
     },
     textOptions(index){  //口味选择
       let uid = index;
