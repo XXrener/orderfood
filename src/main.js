@@ -6,7 +6,7 @@ import router from './router'
 import axios from 'axios'
 import VueAxios from 'vue-axios'
 // 默认配置
-const baseUrl = 'http://a.itying.com/api/'
+const baseUrl = 'http://localhost:8080/'
 axios.defaults.timeout = 10000;//超时
 axios.defaults.baseURL = baseUrl;//默认地址
 /* axios.defaults.transformRequest = function (data){
@@ -30,6 +30,10 @@ import '@/assets/css/basic.scss'
 import store from './store/index'
 
 //  全局组件
+import NavFooter from './components/bottomMenu/NavFooter.vue'
+import Masking from './components/Masking/masking.vue'
+Vue.component('NavFooter',NavFooter)
+Vue.component('Masking',Masking)
 new Vue({
   render: h => h(App),
   router,
