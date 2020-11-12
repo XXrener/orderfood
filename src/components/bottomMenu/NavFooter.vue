@@ -59,10 +59,13 @@ export default {
   methods: {
   
     showMenu(){
-      this.navShow= !this.navShow
-      this.flag = !this.flag
-     console.log(this.navShow,"列表")
-      console.log(this.flag,"事件")
+      this.navShow= !this.navShow;
+      this.flag = !this.flag;
+      let that = this;
+      setTimeout(function(){
+           that.$store.commit('showMasking',that.flag);
+      },600)
+     
     }
   },
   mounted(){
@@ -80,7 +83,7 @@ export default {
 */
 
 .footer_nav{
-    z-index: 10;
+    z-index: 666;
     &.nav{
       background-color: #000;
     }
@@ -114,7 +117,7 @@ export default {
 ***导航展开菜单
 */
 .footer_nav_show{
-    z-index: 8;
+    z-index: 665;
       position: fixed;
       bottom:.2rem;
       left: .5rem;
@@ -147,26 +150,16 @@ export default {
         
         opacity: 1;
         &:nth-child(1){
-          
-        // animation: mesh .6s linear forwards;
          transform: translateX(11rem);
         }
         &:nth-child(2){
-    
-          // background-color: red;
-          // animation: mesh2 .6s linear forwards;
           transform: translate(9rem,-5rem);
         }
         &:nth-child(3){
-    
-          // background-color: red;
-          // animation: mesh3 .6s linear forwards;
+
           transform: translate(5rem,-9rem);
         }
         &:nth-child(4){
-    
-          // background-color: red;
-          // animation: mesh4 .6s linear forwards;
            transform: translate(0rem,-11rem);
         }
       }
