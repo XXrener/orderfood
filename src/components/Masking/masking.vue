@@ -1,6 +1,9 @@
 <template>
      <!-- 蒙版 -->
-    <div class="ssss" :class="{masking:isShowMasking}" @click="masking"></div>
+     <transition name="mask">
+         <div class="masking" v-if="isShowMasking"></div>
+     </transition>
+    
 </template>
 <script>
 export default {
@@ -25,11 +28,11 @@ export default {
 </script>
 <style lang="scss">
  /*透明层*/
-    .ssss{
+   /*  .ssss{
          &:not(.masking){
              animation: .5s maskss linear ;
          }
-    }
+    } */
   .masking {
     position: fixed;
     left: 0px;
@@ -42,7 +45,16 @@ export default {
     // transform:
     z-index: 555;
   }
-  @keyframes mask {
+    .mask-enter,.mask-leave-to{
+        opacity: 0;
+    }
+    .mask-enter-active{ //进场 
+        transition: all .2s ease;
+    }
+    .mask-leave-active {  //离场
+        transition:all .2s ease;
+    }
+/*   @keyframes mask {
       from{
           opacity: 0;
       }
@@ -57,5 +69,5 @@ export default {
       to{
           opacity: 0;
       }
-  }
+  } */
 </style>

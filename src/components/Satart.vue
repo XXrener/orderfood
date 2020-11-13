@@ -57,26 +57,12 @@ export default {
   methods:{
     maxplayers(index){  //人数本地储存
        this.select = index;
-       let prople = index +1;
-       this.p_num = this.$store.state.prople;
-       this.$store.commit('tableprople',prople)
-       this.$store.commit('comment','lm01')
+       
      
     },
     satartOrder(){
       this.$router.push({ path: 'home' })
-      /* axios.post('/addPeopleInfo',{
-        uid:this.$store.state.uid,                 
-        p_num:this.select,
-        p_mark:this.p_mark
-      }).then(res =>{
-
-        console.log(res)
-         if(res.data.success){
-
-          this.$router.push({ path: 'home' })
-        }
-      }) */
+      
     },
     textOptions(index){  //口味选择
       let uid = index;

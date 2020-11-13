@@ -19,7 +19,7 @@
       </nav>
     </header>
     <!-- 侧边栏分类菜单 -->
-    <aside class="left_cate" :class="{isCate:isShowmaSking}">
+    <aside class="left_cate" :class="{isCate:flag}">
       <ul>
         <li v-for=" (items,index) in listData"
            :key="index" 
@@ -32,7 +32,7 @@
       </ul>
 
       <!-- 菜单按钮 -->
-      <div class="nav_cate" @click="isShowmaSking=!isShowmaSking">
+      <div class="nav_cate" @click="openMenu">
         <img :src="urlnav" />
         <p>菜单</p>
       </div>
@@ -40,17 +40,17 @@
 
     <!-- 内容区 -->
     <div class="content">
-      <div class="item" v-for=" (item,key) in listData" :key="key" :ref="key" >
+      <div class="item" v-for=" (item,key) in listData" :key="key" :ref="item.id" >
         <h3 class="item_cate" >
             {{item.title}}
         </h3>
 
         <ul class="item_list">
           <li  v-for=" food in item.list" :key="food.id">
-            <router-link :to="{name:'pcontent',query:{ id: food._id }}">
+            <router-link :to="{name:'pcontent',query:{aid:food.aid,uid:food.uid }}">
               <div class="inner">
-                <img :src="api+food.img_url" alt />
-                <p class="title">{{food.title}}</p>
+                <img :src="food.url_img" alt />
+                <p class="title">{{food.name}}</p>
                 <p class="price">
                   <span>￥</span>{{food.price}}
                 </p>
@@ -99,7 +99,7 @@ export default {
        api:config.api,  //图片拼接URL
       listData:[],
       selections:[],
-      isShowmaSking:false,     //菜单显示
+      flag:false,
       optionsMenu:0, //点击菜单
       scroll:'',
      
@@ -110,12 +110,26 @@ export default {
   created(){
     // window.addEventListener()
   },
+  computed:{
+  
+  },
   methods: {
-    
+      openMenu(){  
+        this.flag = !this.flag
+        this.$store.commit('showMasking',this.flag)
+      }
 
   },
   mounted() {
-      console.log(axios)
+     
+      axios.get('/api/menu.json').then(res =>{
+        if(res.data){
+          this.listData = res.data.body.menulist
+        }
+        // console.log(res.data.body.menulist)
+      }).catch(err =>{
+        console.log(err,"本地请求出错")
+      })
   }
 };
 </script>
@@ -218,7 +232,7 @@ export default {
       transform: translate(100%, 0);
     }
     
-    z-index: 2;
+    z-index: 667;
     width: 6rem;
     height: 100%;
     position: fixed;
@@ -231,7 +245,7 @@ export default {
       position: absolute;
       height: 100%;
       padding: 12rem 0.5rem 0.5rem 0.5rem;
-      z-index: 3;
+      z-index: 666;
       background: #eee;
       li {
         &.redColor{
@@ -248,36 +262,28 @@ export default {
 
     .nav_cate {
       
-      position: absolute;
-
-      right: -3.5rem;
-
-      background: rgba(132, 128, 128, 0.9);
-      top: 42%;
-
-      width: 5rem;
-
-      height: 4rem;
-      text-align: center;
-
-      border-radius: 0rem 50% 50% 0rem;
-
-      z-index: 2;
+          position: absolute;
+          right: -2.9rem;
+          background: rgba(132, 128, 128, 0.9);
+          top: 42%;
+          width: 3rem;
+          height: 4rem;
+          text-align: center;
+          border-radius: 0rem 50% 50% 0rem;
+          z-index: 665;
       img {
         width: 1.8rem;
 
         height: 1.6rem;
 
-        margin-left: 1rem;
+        // margin-left: 1rem;
 
         margin-top: 0.4rem;
       }
       p {
-        color: #fff;
-        margin-left: 1rem;
-        margin-top: -0.3rem;
-        font-size: 14px;
-        text-decoration: none;
+       color: #fff;
+      font-size: 14px;
+      text-decoration: none;
       }
     }
   }

@@ -14,6 +14,7 @@ module.exports = {
       .set('@assets',resolve('src/assets'))
       .set('@components',resolve('src/components'))
       .set('@store',resolve('store/index.js'))
+
   },
   devServer:{
     host: "localhost",
@@ -23,7 +24,7 @@ module.exports = {
     hotOnly: true, // 热更新
     proxy:{
       '/api':{
-        target:'http://localhost:8080',
+        target:'http://localhost:8080/api',
         changeOrigin:true,
         ws:true,  //代理webpack
         pathRewrite:{   //重定向 请求路径

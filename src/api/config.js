@@ -1,6 +1,6 @@
 var config={
 
-    api:'http://a.itying.com/'
+    api:'http://localhost:8080'
 }
 
 export default config;

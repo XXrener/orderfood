@@ -8,8 +8,8 @@
        </router-link>
     <div class="p_content">		
         <div class="p_info">				
-            <img :src="api+cartlist.img_url"/>				
-            <h2>{{cartlist.title}}</h2>				
+            <img :src="cartlist.url_img"/>				
+            <h2>{{cartlist.name}}</h2>				
             <p class="price"><span>{{cartlist.price}}</span>/份</p>
         </div>
         <div class="p_detial">
@@ -17,8 +17,8 @@
                 商品详情					
             </h3>
             <div class="p_content"> 
-                <p v-html="cartlist.content">
-              
+                <p>
+                    {{cartlist.desc}}
                 </p>
             </div>
         </div>
@@ -31,7 +31,7 @@
             <div class="cart_num">
               <div class="input_left" @click="subtraction">-</div>
               <div class="input_center">
-                  <input ref="amount" type="text"  readonly="readonly" value="1" name="num" id="num" />
+                  <input type="text" v-model="nums"  readonly="readonly" value="1" name="num" id="num" />
               </div>
               <div class="input_right" @click="addition">+</div>				      
             </div>								
@@ -52,56 +52,122 @@
             return{
                 msg:"开始组件挂载",
                 api: config.api,
-                cartlist:[]
+                uid:'',
+                cartlist:[],
+                storelist:[],
+                num:1
+            }
+        },
+        computed:{
+            nums(){
+                console.log(this.num,"变化")
+                return this.num
             }
         },
         mounted(){
 
-            let uid = this.$route.query;
-            this.downLoadContent(uid)
+            let { aid , uid } = this.$route.query;
+            this.uid = uid;
+            this.downLoadContent(aid ,uid)
         },
         methods:{
-            downLoadContent(uid){
-                axios.get("/productcontent",{params:{id:uid.id}}).then(res =>{
-                   
-                    this.cartlist = res.data.result[0];
+            downLoadContent( aid ,uid){
+                axios.get("/api/menu.json").then(res =>{
+
+                    if(res.data){
+                     
+                        let menu  = res.data.body.menulist;
+                            
+                        for(var i = 0; i< menu.length;i++ ){
+                            
+                            if(menu[i].aid==aid){
+
+                                let menulist = menu[i].list;
+                                for(let j =0; j<menulist.length;j++){
+
+                                    if(menulist[j].uid == uid ){
+
+                                        this.cartlist = menulist[j]
+                                        
+                                    }
+                                }
+
+                            } 
+                        }
+                      
+                    }
                    
                 }).catch( err =>{
                     console.log(err)
                 })
             },
             subtraction(){
-                if(this.$refs.amount.value>1){
-                    this.$refs.amount.value-=1
+                if(this.num>1){
+                    this.num-=1
                 }else{
-                    this.$refs.amount.value =1
+                    this.num =1
                 }
                
             },
             addition(){
-                this.$refs.amount.value = parseInt(this.$refs.amount.value)+1;
+              this.num +=1;
             },
             /*
                 加入购物车
             */
            addCart(){
                //桌子号 二维码获取 暂定值
-               console.log(this.$store.state.uid,"桌号")
-               axios.post('/addcart',{
-                   uid:this.$store.state.uid,
-                   title:this.cartlist.title,
-                   product_id:this.cartlist._id,
-                   img_url:this.cartlist.img_url,
-                   price:this.cartlist.price,
-                   num:this.$refs.amount.value,
-               }).then(res =>{
-                   console.log(res,"加入购物车")
-                   if(res.data.msg){
-                       this.$router.push({path:'home'})
-                   }
-               }).catch(err =>{
-                   console.log(err,"加入失败")
-               })
+                console.log(this.cartlist)
+                let total ={
+                            uid:this.cartlist.uid,
+                            name:this.cartlist.name,
+                            price:this.cartlist.price,
+                            url:this.cartlist.url_img,
+                            num:this.num
+                            }
+                this.$store.commit('menulocal',total)
+                this.$router.push({name:'home'})
+                // console.log(total[0].uid)
+
+              /*   for( var i = 0; i <total.length ;i++){
+                    console.log(total[i].uid,"0000000")
+                    console.log(total, this.uid, "0000000")
+                    console.log(total[i].uid=='',"111111111")
+
+                    if(total[i].uid ==''){
+                         total = [
+                                    {
+                                        uid:this.uid,
+                                        name:this.cartlist.name,
+                                        price:this.cartlist.price,
+                                        url:this.cartlist.url_img,
+                                        num:this.num
+                                    }
+                                ]
+                        console.log(total,"结算1")
+                        return //单页数据 防止重复循环
+
+                    }else if(total[i].uid != this.uid ){
+                         total.push(
+                            {
+                                uid:this.uid,
+                                name:this.cartlist.name,
+                                price:this.cartlist.price,
+                                url:this.cartlist.url_img,
+                                num:this.num
+                            }
+                        )
+                        console.log(total,"结算1")
+                            return //单页数据 防止重复循环
+
+                    }else if(total[i].uid == this.uid){
+                        total[i].num += this.num;
+                        console.log(total,"结算3")
+                        return //单页数据 防止重复循环
+                    }
+                   
+                } */
+               
            }
         }
     }
@@ -172,7 +238,7 @@
             img{
                 width: 100%;
                 
-                height: 18rem
+                height: 18rem;
             } 
             
             h2{
@@ -193,7 +259,7 @@
             background: #fff;
             
             margin-top: 1rem;
-            
+            margin-bottom:4rem;
             h3{
                 padding: .5rem;
             }
