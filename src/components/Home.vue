@@ -63,7 +63,7 @@
     </div>
    
     <div class="footer_cart">
-      <span class="cartnum" v-if="isShowCartNum">{{cartNum}}</span>
+      <span class="cartnum" v-if="isShowCartNum">{{cartnum}}</span>
       <router-link to="/cart">
         <img :src="urlcart" alt />
         <p>购物车</p>
@@ -111,7 +111,16 @@ export default {
     // window.addEventListener()
   },
   computed:{
-  
+      // 购物车按钮数量
+      cartnum(){
+        let num = 0;
+        let cart = this.$store.state.menulocal;
+        for (let i = 0; i < cart.length; i++) {
+          const list = cart[i];
+          num +=list.num;
+        }
+        return num
+      }
   },
   methods: {
       openMenu(){  
@@ -122,7 +131,7 @@ export default {
   },
   mounted() {
      
-      axios.get('/api/menu.json').then(res =>{
+      axios.get('/api/menu.json').then(res =>{  //获取本地JSON
         if(res.data){
           this.listData = res.data.body.menulist
         }

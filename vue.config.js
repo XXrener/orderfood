@@ -24,7 +24,7 @@ module.exports = {
     hotOnly: true, // 热更新
     proxy:{
       '/api':{
-        target:'http://localhost:8080/api',
+        target:'http://localhost:8080',
         changeOrigin:true,
         ws:true,  //代理webpack
         pathRewrite:{   //重定向 请求路径

@@ -9,7 +9,7 @@
           <div class="p_number_left">
             <p>
               用餐人数：
-              <span>{{allprople}}人</span>
+              <span>{{}}人</span>
             </p>
             <p>
               备注：
@@ -23,14 +23,14 @@
           </div>
         </div>
 
-        <div class="cart_num">
+        <div class="cart_p_num">
           <p>
             你购物车共
-            <span>{{cartList.num}}</span>个菜
+            <span>{{totalnum}}</span>个菜
           </p>
           <p>
             合计：
-            <span>￥{{allResult}}</span>
+            <span>￥{{totalprice}}</span>
           </p>
         </div>
       </div>
@@ -38,22 +38,22 @@
       <div class="cart_list">
         <h2>详情</h2>
         <ul>
-          <li class="item" v-for="(item,index) in cartList" :key="index">
+          <li class="item" v-for=" item in cartlist" :key="item.id">
             <div class="left_food">
-              <img src="../assets/images/imgs/s8.jpg" />
+              <img :src="item.url" />
               <div class="food_info">
-                <p>{{item.title}}</p>
+                <p>{{item.name}}</p>
                 <p class="price">￥{{item.price}}</p>
               </div>
             </div>
 
             <div class="right_cart">
               <div class="cart_num">
-                <div class="input_left" @click="subtraction(item,index)">-</div>
+                <div class="input_left" @click="subtraction(item.uid)">-</div>
                 <div class="input_center">
-                  <input type="text" readonly="readonly" v-model="item.num" value="" name="num" />
+                 <input type="text" ref="value" readonly="readonly" v-model="item.num" value="" name="num" /> <!-- // v-model="item.num" -->
                 </div>
-                <div class="input_right" @click="addition(item)">+</div>
+                <div class="input_right" @click="addition(item.uid)">+</div>
               </div>
             </div>
           </li>
@@ -149,21 +149,16 @@
       </div>
     </div>
 
-    <!-- 底部按钮 -->
-    <!-- <div class="footer_nav">
-      <img :src="urlnavigation" alt />
-      <p>导航</p>
-    </div> -->
+  
     <BottomMenu></BottomMenu>
-    <!-- <div class="footer_books">
-      <img :src="urlmenu" alt />
-      <p>续单</p>
-    </div> -->
+   
 
-    <div class="footer_cart">
-      <img :src="urlcart" alt />
-      <p>下单</p>
-    </div>
+    <router-link to="/order">
+      <div class="footer_cart">
+        <img :src="urlcart" alt />
+        <p>下单</p>
+      </div>
+    </router-link>
   </div>
 </template>
 
@@ -177,7 +172,7 @@ import urledit from "../assets/images/edit.jpg";
 // 组件
 import BottomMenu from './bottomMenu/NavFooter' 
 
-import axios from 'axios'
+// import axios from 'axios'
 export default {
   name: "cart",
   data() {
@@ -188,7 +183,7 @@ export default {
       urlcart,
       urlmenu,
       urledit,
-      cartList:'' //购物车列表
+      cartlist:this.$store.state.menulocal//购物车列表
       
 
     };
@@ -197,90 +192,51 @@ export default {
     BottomMenu
   },
   computed:{
-      allResult(){
-        let all=0;
-        for(var i = 0;i<this.cartList.length;i++){
-          console.log(this.cartList[i].price)
-          console.log(this.cartList[i].num)
-          all += parseFloat(this.cartList[i].price*this.cartList[i].num)
-          console.log(all)
+      totalnum(){ //总数量
+        let nums = 0;
+        for (let i = 0; i < this.cartlist.length; i++) {
+          const list = this.cartlist[i];
+          console.log(list.num,"数量")
+             nums +=list.num
         }
-
-        return all;
+        return nums
       },
-      allprople(){
-        return this.$store.state.prople
-      },
-      allcomment(){
-        return this.$store.state.uid
+      totalprice(){
+          let total = 0;
+        for (let i = 0; i < this.cartlist.length; i++) {
+          const list = this.cartlist[i];
+            total += list.num*list.price
+        }
+        return total
       }
+  },
+  created(){
+
   },
   methods:{
-    changeNum(){
-      // console.log(this.state)
+      changeNum(){
+     
+      },
+      subtraction(uid){
+        // console.log(this.$refs.value[index]._value,index,uid,"你要加什么")
+        // let num = this.$refs.value[index]._value;
+        this.$store.commit("submenu",uid)
+
+      },
+      addition(uid){
+        // console.log(this.$refs.value[index]._value,index,uid,"你要减什么")
+        // let num = this.$refs.value[index]._value;
+        this.$store.commit("addmenu",uid);
     },
-    subtraction(item,index){
-
-        axios.get('/api/decCart',{
-          params:{uid:this.$store.state.uid,product_id:item.product_id, num:item.num}
-          
-         
-          }).then(res=>{
-          // console.log(res,"购物车专属也222222222")
-          if(res.data){
-            this.cartList=res.data.result
-            console.log(this.cartList)
-          }
-        }).catch(err =>{
-          console.log(err,"购物车专属错误也22222222")
-        })
-
-
-        if(item.num>1){
-          --item.num
-        }else{
-          this.cartList.splice(index,1)
-        }
-    },
-    addition(item){
-
-      axios.get('/api/incCart',{
-          params:{
-            uid:this.$store.state.uid,
-          product_id:item.product_id, 
-          num:item.num
-          }   
-         
-          }).then(res=>{
-          // console.log(res,"购物车专属也1111111111")
-          if(res.data){
-            this.cartList=res.data.result
-            console.log(this.cartList)
-          }
-        }).catch(err =>{
-          console.log(err,"购物车专属错误也1111111")
-        })
-
-
-      ++item.num
-    }
   },
   mounted(){
-    axios.get('/cartlist',{params:{uid:this.$store.state.uid}}).then(res=>{
-      
-      if(res.data){
-        this.cartList=res.data.result
-        // console.log(this.cartList)
-      }
-    }).catch(err =>{
-      console.log(err,"购物车专属错误也")
-    })
+
     
   }
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #cart {
   .cart_content {
     padding: 1rem;

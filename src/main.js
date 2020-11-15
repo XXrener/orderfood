@@ -7,8 +7,9 @@ import axios from 'axios'
 import VueAxios from 'vue-axios'
 // 默认配置
 const baseUrl = 'http://localhost:8080/'
-axios.defaults.timeout = 10000;//超时
+axios.defaults.timeout = 100000;//超时
 axios.defaults.baseURL = baseUrl;//默认地址
+axios.headers={'X-Requested-With': 'XMLHttpRequest'};
 /* axios.defaults.transformRequest = function (data){
   data = JSON.stringify(data)
   return data;

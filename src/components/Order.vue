@@ -15,7 +15,7 @@
 
         <h3>
           已点菜品28份,合计 :
-          <span>222元</span>
+          <span>{{totalprice}}元</span>
         </h3>
       </div>
 
@@ -24,46 +24,41 @@
         <h3>商品详情</h3>
 
         <ul>
-          <li>
-            <div class="title">手脚乱伸鱿</div>
-            <div class="num">6份</div>
-            <div class="price">60元</div>
-          </li>
-          <li>
-            <div class="title">肉色清凉</div>
-            <div class="num">6份</div>
-            <div class="price">60元</div>
-          </li>
-          <li>
-            <div class="title">手脚乱伸鱿</div>
-            <div class="num">6份</div>
-            <div class="price">42元</div>
-          </li>
-          <li>
-            <div class="title">椒盐小河侠</div>
-            <div class="num">10份</div>
-            <div class="price">60元</div>
+          <li v-for=" item in orderlist" :key="item.id">
+            <div class="title">{{item.name}}</div>
+            <div class="num">{{item.num}}份</div>
+            <div class="price">{{item.price}}元</div>
           </li>
         </ul>
       </div>
     </div>
-    <v-navfooter></v-navfooter>
+    <!-- <v-navfooter></v-navfooter> -->
+    <NavFooter></NavFooter>
   </div>
 </template>
 
 <script>
-import navfooter from './bottomMenu/NavFooter'
+
 export default {
   name: "order",
   data() {
     return {
-        urltimer: require('../assets/images/timer.png'),
+      urltimer: require('../assets/images/timer.png'),
       msg: "开始组件挂载",
+      orderlist:this.$store.state.menulocal
     };
   },
-  components:{
-    'v-navfooter':navfooter
+  computed:{
+     totalprice(){
+          let total = 0;
+        for (let i = 0; i < this.orderlist.length; i++) {
+          const list = this.orderlist[i];
+            total += list.num*list.price
+        }
+        return total
+      }
   }
+  
 };
 </script>
 
