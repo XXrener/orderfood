@@ -22,7 +22,7 @@
 
         
         <ul class="mark_list">
-            <li ref="index" v-for=" (item,index) in taste" 
+            <li class="taste" ref="index" v-for=" (item,index) in taste" 
             :key="index" 
             @click="textOptions(index)">						
                 {{item}}
@@ -57,8 +57,7 @@ export default {
   methods:{
     maxplayers(index){  //人数本地储存
        this.select = index;
-       
-     
+       this.$store.commit('changePeople',this.nums[index]) //当前数组下标 等于当前数组值
     },
     satartOrder(){
       this.$router.push({ path: 'home' })
@@ -67,6 +66,7 @@ export default {
     textOptions(index){  //口味选择
       let uid = index;
         this.p_mark += ' '+this.$refs.index[uid].innerHTML.trim()
+        this.$store.commit('changeRemarks',this.p_mark)
         console.log(this.p_mark)
     }
   },
@@ -138,11 +138,13 @@ export default {
         padding: .5rem;
         
         li{
-            
-             width: 25%;
+
+            //  width: 25%;
              padding: .5rem;             
              box-sizing: border-box;   /*盒子的宽度=盒子本身宽度    默认 盒子的宽度=盒子的宽度+padding+border*/
-             
+            //  background-color: red;
+             text-align: center;
+             margin: .25rem;
              span{
                  
                  display: block;

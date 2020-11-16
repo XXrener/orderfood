@@ -8,6 +8,7 @@ import Hot from "./components/Hot.vue"
 import Order from "./components/Order.vue"
 import Pcontent from "./components/Pcontent.vue"
 import Search from "./components/Search.vue"
+import SatartCopy from "./components/SatartCopy.vue"
 const router = new VueRouter({
     mode:'history',
     routes:[
@@ -18,6 +19,15 @@ const router = new VueRouter({
             mate: {
                 title: '开始',
                 tier: 0
+            }
+        },
+        {
+            name:"SatartCopy",
+            path: '/SatartCopy',
+            component: SatartCopy,
+            mate: {
+                title: '修改',
+                tier: 5
             }
         },
         {   

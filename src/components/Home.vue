@@ -39,9 +39,9 @@
     </aside>
 
     <!-- 内容区 -->
-    <div class="content">
+    <div class="content" ref="content">
       <div class="item" v-for=" (item,key) in listData" :key="key" :ref="item.id" >
-        <h3 class="item_cate" >
+        <h3 ref="cartlist" class="item_cate" >
             {{item.title}}
         </h3>
 
@@ -63,14 +63,14 @@
     </div>
    
     <div class="footer_cart">
-      <span class="cartnum" v-if="isShowCartNum">{{cartnum}}</span>
+      <span class="cartnum" v-if="isShowCartNum">{{totalnum}}</span>
       <router-link to="/cart">
         <img :src="urlcart" alt />
         <p>购物车</p>
       </router-link>
     </div>
     <NavFooter></NavFooter>
-    <Masking></Masking>
+    <!-- <Masking></Masking> -->
   </div>
 </template>
 
@@ -102,8 +102,6 @@ export default {
       flag:false,
       optionsMenu:0, //点击菜单
       scroll:'',
-     
-      cartNum:0 , //购物车数量
     isShowCartNum:true //购物车数量显示
     };
   },
@@ -112,20 +110,127 @@ export default {
   },
   computed:{
       // 购物车按钮数量
-      cartnum(){
-        let num = 0;
-        let cart = this.$store.state.menulocal;
-        for (let i = 0; i < cart.length; i++) {
-          const list = cart[i];
-          num +=list.num;
-        }
-        return num
-      }
+     totalnum(){
+       let num = this.$store.state.menulocal;
+       let total = 0;
+       for (let i = 0; i < num.length; i++) {
+         const list = num[i];
+         total += list.num
+       }
+       return total
+     }
   },
   methods: {
-      openMenu(){  
+      openMenu(){  //菜单预览
         this.flag = !this.flag
-        this.$store.commit('showMasking',this.flag)
+        // this.$store.commit('showMasking',this.flag)
+      },
+      locationMenu(index){
+        this.optionsMenu = index;//按钮颜色
+        this.$nextTick(()=>{
+          let scroll = document.documentElement|| document.body;
+
+      switch(index){
+          case 0:
+             window.scrollTo({ //平滑滚动
+                top: 0, 
+                behavior: "smooth" 
+            });
+            // scroll.scrollTop = 0;
+          break;
+          case 1:
+             window.scrollTo({ //平滑滚动
+                top: 540, 
+                behavior: "smooth" 
+            });
+            this.flag = !this.flag
+            console.log(scroll.scrollTop)
+            break;
+          case 2:
+             window.scrollTo({ //平滑滚动
+                top: 1173, 
+                behavior: "smooth" 
+            });
+            this.flag = !this.flag
+            console.log(scroll.scrollTop)
+            // scroll.scrollTop = 1173;
+            break;
+          case 3:
+             window.scrollTo({ //平滑滚动
+                top: 1653, 
+                behavior: "smooth" 
+            });
+            this.flag = !this.flag
+            console.log(scroll.scrollTop)
+            // scroll.scrollTop =1653;
+            break;
+          case 4:
+            window.scrollTo({ //平滑滚动
+                top:scroll.offsetHeight-scroll.clientHeight, 
+                behavior: "smooth" 
+            });
+            this.flag = !this.flag
+            // scroll.offsetHeight-scroll.clientHeight;
+            // scroll.scrollTop = scroll.offsetHeight-scroll.clientHeight;
+            break;
+      }
+   /*              console.log( "strInfo+=\r\n网页可见区域高:clientHeight"+scroll.clientHeight)
+     console.log(" strInfo+=\r\n网页可见区域宽:offsetWidth" +scroll.offsetWidth+" (包括边线的宽)")
+     console.log(" strInfo+=\r\n网页可见区域高:offsetHeight+" +scroll.offsetHeight+" +(包括边线的高)")
+     console.log("strInfo+=\r\n网页正文全文宽:scrollWidth" +scroll.scrollWidth)
+     console.log(" strInfo+=\r\n网页正文全文高scrollHeight:+"+scroll.scrollHeight)
+     console.log(" strInfo+=\r\n网页被卷去的高:scrollTop" +scroll.scrollTop)
+     console.log(" strInfo+=\r\n网页被卷去的左:scrollLeft" +scroll.scrollLeft)
+     console.log("strInfo+=\r\n网页正文部分上:screenTop" +window.screenTop)
+     console.log("strInfo+=\r\n网页正文部分左:screenLeft" +window.screenLeft)
+     console.log(" strInfo+=\r\n屏幕分辨率的高:screen.height" +window.screen.height)
+     console.log(" strInfo+=\r\n屏幕分辨率的宽:screen.width"+window.screen.width)
+     console.log("  strInfo+=\r\n屏幕可用工作区高度:availHeight" +window.screen.availHeight)
+     console.log(" strInfo+=\r\n屏幕可用工作区宽度:availWidth" +window.screen.availWidth)
+    console.log("0000000000000000")
+     console.log("0000000000000000")
+      console.log("0000000000000000")
+       console.log("0000000000000000")
+     console.log( "strInfo+=\r\n网页可见区域高:clientHeight"+this.$refs.cartlist[index].clientHeight)
+     console.log(" strInfo+=\r\n网页可见区域宽:offsetWidth" +this.$refs.cartlist[index].offsetWidth+" (包括边线的宽)")
+     console.log(" strInfo+=\r\n网页可见区域高:offsetHeight+" +this.$refs.cartlist[index].offsetHeight+" +(包括边线的高)")
+     console.log("strInfo+=\r\n网页正文全文宽:scrollWidth" +this.$refs.cartlist[index].scrollWidth)
+     console.log(" strInfo+=\r\n网页正文全文高scrollHeight:+"+this.$refs.cartlist[index].scrollHeight)
+     console.log(" strInfo+=\r\n网页被卷去的高:scrollTop" +this.$refs.cartlist[index].scrollTop)
+     console.log(" strInfo+=\r\n网页被卷去的左:scrollLeft" +this.$refs.cartlist[index].scrollLeft)
+     console.log("strInfo+=\r\n网页正文部分上:screenTop" +this.$refs.cartlist[index].screenTop)
+     console.log("strInfo+=\r\n网页正文部分左:screenLeft" +this.$refs.cartlist[index].screenLeft)
+     console.log("1111111111")
+     console.log("1111111111")
+     console.log("1111111111")
+     console.log("1111111111")
+     console.log("1111111111") */
+
+
+    //  console.log(" strInfo+=\r\n屏幕分辨率的高:screen.height" +this.$refs.cartlist[index].screen.height)
+    //  console.log(" strInfo+=\r\n屏幕分辨率的宽:screen.width"+this.$refs.cartlist[index].screen.width)
+    //  console.log("  strInfo+=\r\n屏幕可用工作区高度:availHeight" +this.$refs.cartlist[index].screen.availHeight)
+    //  console.log(" strInfo+=\r\n屏幕可用工作区宽度:availWidth" +this.$refs.cartlist[index].screen.availWidth)
+   })
+        // 
+        // let a = this.$refs.content.scrollTop;
+        // let b = this.$refs.cartlist[index].scrollTop;
+        // // a = 300;
+
+        // console.log(a,"大容器")
+        // console.log(b,"列表元素")
+        // // let menu = this.$refs.cartlist[index].scrollTop;
+        // this.$nextTick(()=>{
+        //   let scroll = document.documentElement.scrollTop|| document.body.scrollTop;
+        //   console.log(scroll,"页面滚动条啊 ")
+        //   console.log(this.$refs.cartlist[index].scrollHeight,"滚动条长度啊")
+        // })  
+        // var scrolls = document.documentElement.scrollTop
+        // window.scrollY = 400;
+        // this.$refs.cartlist[index].scrollY = window.scrollY
+        // console.log(scrolls,window.scrollY,"滚动条")
+        // console.log(this.$refs.cartlist[index].scrollY,"数目")
+        //
       }
 
   },
@@ -139,6 +244,29 @@ export default {
       }).catch(err =>{
         console.log(err,"本地请求出错")
       })
+
+
+      //滚动的位置
+    //  console.log( "strInfo+=\r\n网页可见区域高:clientHeight"+document.body.clientHeight)
+    //  console.log(" strInfo+=\r\n网页可见区域宽:offsetWidth" +document.body.offsetWidth+" (包括边线的宽)")
+    //  console.log(" strInfo+=\r\n网页可见区域高:offsetHeight+" +document.body.offsetHeight+" +(包括边线的高)")
+    //  console.log("strInfo+=\r\n网页正文全文宽:scrollWidth" +document.body.scrollWidth)
+    //  console.log(" strInfo+=\r\n网页正文全文高scrollHeight:+"+document.body.scrollHeight)
+    //  console.log(" strInfo+=\r\n网页被卷去的高:scrollTop" +document.body.scrollTop)
+    //  console.log(" strInfo+=\r\n网页被卷去的左:scrollLeft" +document.body.scrollLeft)
+    //  console.log("strInfo+=\r\n网页正文部分上:screenTop" +window.screenTop)
+    //  console.log("strInfo+=\r\n网页正文部分左:screenLeft" +window.screenLeft)
+    //  console.log(" strInfo+=\r\n屏幕分辨率的高:screen.height" +window.screen.height)
+    //  console.log(" strInfo+=\r\n屏幕分辨率的宽:screen.width"+window.screen.width)
+    //  console.log("  strInfo+=\r\n屏幕可用工作区高度:availHeight" +window.screen.availHeight)
+    //  console.log(" strInfo+=\r\n屏幕可用工作区宽度:availWidth" +window.screen.availWidth)
+    // console.log("0000000000000000")
+    //  console.log("0000000000000000")
+    //   console.log("0000000000000000")
+    //    console.log("0000000000000000")
+   
+  //  this.locationMenu(a)
+    
   }
 };
 </script>
@@ -225,7 +353,21 @@ export default {
             height: 8rem;
           }
           p {
+            font-size: 12px;
             padding: 0.2rem 0.5rem;
+            color: #555;
+            span{
+              color: red;
+            }
+          }
+
+          &:active{
+            p{
+              color: #555;
+              span{
+                color: red;
+              }
+            }
           }
         }
       }

@@ -132,11 +132,12 @@
                             }
 
                 this.$store.commit('menulocal',total)
+                this.flag=!this.flag
                 this.$store.commit('showMasking',this.flag)
                 setTimeout(function(){
                     that.$store.commit('showMasking',!that.flag)
                     that.$router.push({name:'home'})
-                },2000)
+                },1000)
                
                
            }

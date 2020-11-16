@@ -9,11 +9,11 @@
           <div class="p_number_left">
             <p>
               用餐人数：
-              <span>{{}}人</span>
+              <span>{{people}}人</span>
             </p>
             <p>
               备注：
-              <span>无</span>
+              <span>{{remarks}}</span>
             </p>
           </div>
 
@@ -183,8 +183,9 @@ export default {
       urlcart,
       urlmenu,
       urledit,
-      cartlist:this.$store.state.menulocal//购物车列表
-      
+      cartlist:this.$store.state.menulocal,//购物车列表
+      people:this.$store.state.people,//用餐人数
+      remarks:this.$store.state.remarks
 
     };
   },
@@ -215,7 +216,9 @@ export default {
   },
   methods:{
       changeNum(){
-     
+        console.log("2222222222")
+        this.$router.push({path:"/SatartCopy"})
+        console.log("2222222222")
       },
       subtraction(uid){
         // console.log(this.$refs.value[index]._value,index,uid,"你要加什么")

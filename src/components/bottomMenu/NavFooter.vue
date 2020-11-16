@@ -61,16 +61,16 @@ export default {
     showMenu(){
       this.navShow= !this.navShow;
       this.flag = !this.flag;
-      let that = this;
-      setTimeout(function(){
+      // let that = this;
+     /*  setTimeout(function(){
            that.$store.commit('showMasking',that.flag);
-      },600)
+      },600) */
      
     }
   },
   mounted(){
-    console.log(this.navShow,"列表")
-    console.log(this.flag,"事件")
+    // console.log(this.navShow,"列表")
+    // console.log(this.flag,"事件")
   }
 };
 </script>
