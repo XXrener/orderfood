@@ -2,6 +2,7 @@ const webpack = require('webpack');
  const path = require('path');  //路径别名配置
  const resolve = (dir) => path.join(__dirname, dir);
 module.exports = {
+  publicPath: process.env.NODE_ENV === 'production' ? './' : './'  ,
   chainWebpack: config => {
     config.plugin('provide').use(webpack.ProvidePlugin, [{
       $: 'jquery',

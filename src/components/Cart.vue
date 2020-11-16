@@ -67,7 +67,7 @@
           <ul>
             <li>
               <div class="inner">
-                <img src="../assets/images/imgj/j7.jpg" alt />
+                <img src="@assets/images/imgj/j7.jpg" alt />
                 <p class="title">西安啤酒</p>
                 <p class="price">
                   <span>￥</span>8/瓶
@@ -77,7 +77,7 @@
 
             <li>
               <div class="inner">
-                <img src="../assets/images/imgc/c10.jpg" alt />
+                <img src="@assets/images/imgc/c10.jpg" alt />
                 <p class="title">墨鱼干锅</p>
                 <p class="price">
                   <span>￥</span>119
@@ -87,7 +87,7 @@
 
             <li>
               <div class="inner">
-                <img src="../assets/images/imgc/c7.jpg" alt />
+                <img src="@assets/images/imgc/c7.jpg" alt />
                 <p class="title">白灼大侠</p>
                 <p class="price">
                   <span>￥</span>68
@@ -97,7 +97,7 @@
 
             <li>
               <div class="inner">
-                <img src="../assets/images/imgc/c1.jpg" alt />
+                <img src="@assets/images/imgc/c1.jpg" alt />
                 <p class="title">秘制五花肉</p>
                 <p class="price">
                   <span>￥</span>67
@@ -107,7 +107,7 @@
 
             <li>
               <div class="inner">
-                <img src="../assets/images/imgc/c2.jpg" alt />
+                <img src="@assets/images/imgc/c2.jpg" alt />
                 <p class="title">特色酱香鸡煲</p>
                 <p class="price">
                   <span>￥</span>78
@@ -117,7 +117,7 @@
 
             <li>
               <div class="inner">
-                <img src="../assets/images/imgz/z6.jpg" alt />
+                <img src="@assets/images/imgz/z6.jpg" alt />
                 <p class="title">生滚鲍鱼粥</p>
                 <p class="price">
                   <span>￥</span>168
@@ -127,7 +127,7 @@
 
             <li>
               <div class="inner">
-                <img src="../assets/images/imgz/z7.jpg" alt />
+                <img src="@assets/images/imgz/z7.jpg" alt />
                 <p class="title">上等紫薯粥</p>
                 <p class="price">
                   <span>￥</span>17
@@ -137,7 +137,7 @@
 
             <li>
               <div class="inner">
-                <img src="../assets/images/imgz/z8.jpg" alt />
+                <img src="@assets/images/imgz/z8.jpg" alt />
                 <p class="title">特补海鲜粥</p>
                 <p class="price">
                   <span>￥</span>138

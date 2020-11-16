@@ -23,6 +23,10 @@ import $ from 'jquery'
 Vue.config.productionTip = false
 Vue.config.devtools = process.env.NODE_ENV === 'development'
 
+//minut-UI
+import MintUI from 'mint-ui' 
+import 'mint-ui/lib/style.css'
+Vue.use(MintUI)
 
 //scss全局
 import '@/assets/css/basic.scss'

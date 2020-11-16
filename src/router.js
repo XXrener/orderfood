@@ -16,56 +16,65 @@ const router = new VueRouter({
             name:"satart",
             path: '/satart',
             component: Satart,
-            mate: {
+            meta: {
                 title: '开始',
                 tier: 0
-            }
-        },
-        {
-            name:"SatartCopy",
-            path: '/SatartCopy',
-            component: SatartCopy,
-            mate: {
-                title: '修改',
-                tier: 5
             }
         },
         {   
             name:'home',
             path: '/home',
             component: Home,
-            mate: {
+            meta: {
                 title: '首页',
                 tier: 1
+            }
+        },
+        {
+            name:'pcontent',
+            path: '/pcontent',
+            component: Pcontent,
+            meta:{
+                title:"下单",
+                tier:2
             }
         },
         {
             name:'cart',
             path: '/cart',
             component: Cart,
-            mate: {
+            meta: {
                 title: '购物车',
-                tier: 2
+                tier: 3
             }
         },
         {
-            name:'hot',
-            path: '/hot',
-            component: Hot,
-            mate: {
-                title: '热门',
-                tier: 3
+            name:"SatartCopy",
+            path: '/SatartCopy',
+            component: SatartCopy,
+            meta: {
+                title: '修改',
+                tier: 4
             }
         },
         {
             name:'order',
             path: '/order',
-            component: Order
+            component: Order,
+            meta:{
+                title:"下单",
+                tier:5
+            }
         },
+        
         {
-            name:'pcontent',
-            path: '/pcontent',
-            component: Pcontent
+            name:'hot',
+            path: '/hot',
+            component: Hot,
+            meta: {
+                title: '热门',
+                tier: 6
+            }
         },
         /* {
             path: '/pcontent/:id',
@@ -75,11 +84,12 @@ const router = new VueRouter({
             name:'search',
             path: '/search',
             component: Search,
-            mate: {
+            meta: {
                 title: '热门',
-                tier: 4
+                tier: 7
             }
         },
+        
         {
             path: '/*',
             redirect: '/satart'

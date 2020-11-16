@@ -29,9 +29,20 @@
             </li>
            
         </ul>
-      <div id="begin" class="satart" @click="satartOrder">
-          <span>开始点餐</span>
-      </div>
+         
+      <!-- <div id="begin" class="satart">
+          <span>扫码点餐</span>
+      </div> -->
+      <mt-button  @click="camera =true"
+          type="primary"
+          size="small"
+          class="orderbtn"
+      >扫码点餐</mt-button>
+      <mt-actionsheet
+              :actions="actions"
+              v-model="camera">
+              扫码点餐
+            </mt-actionsheet>
     </div>
   </div>
 </template>
@@ -51,7 +62,12 @@ export default {
       select:0,
       taste:['打包带走','不要放辣椒','微辣'],
       p_mark:'',
-      p_num:''
+      p_num:'',
+      camera:false, //扫一扫
+      actions:[{
+        name:"扫一扫",
+        method: this.getCamera
+      }]
     }
   },
   methods:{
@@ -60,7 +76,7 @@ export default {
        this.$store.commit('changePeople',this.nums[index]) //当前数组下标 等于当前数组值
     },
     satartOrder(){
-      this.$router.push({ path: 'home' })
+      // this.$router.push({ path: 'home' })
       
     },
     textOptions(index){  //口味选择
@@ -68,6 +84,48 @@ export default {
         this.p_mark += ' '+this.$refs.index[uid].innerHTML.trim()
         this.$store.commit('changeRemarks',this.p_mark)
         console.log(this.p_mark)
+    },
+    getCamera(){
+      this.$router.push({path:'/home'})
+       console.log("获取相机")
+     /*  try{
+         
+     
+      let that = this;
+       
+        if (!window.plus) return;
+        scan = new plus.barcode.Barcode('bcid');
+        scan.onmarked = onmarked;
+
+        function onmarked(type, result, file) {
+          switch (type) {
+            case plus.barcode.QR:
+              type = 'QR';
+              break;
+            case plus.barcode.EAN13:
+              type = 'EAN13';
+              break;
+            case plus.barcode.EAN8:
+              type = 'EAN8';
+              break;
+            default:
+              type = '其它' + type;
+              break;
+          }
+          result = result.replace(/\n/g, '');
+          that.codeUrl = result;
+          alert(result);
+          that.closeScan();
+
+        }
+
+        }catch(error){
+          console.log(error)
+        } */
+      
+    },
+    closeScan(){
+       
     }
   },
   mounted(){
@@ -110,7 +168,7 @@ export default {
   }
 
   .notice {
-    color: red;
+    // color: red;
     //
     text-align: center;
 
@@ -159,21 +217,7 @@ export default {
                  border: 1px solid #ccc;
              }
             
-        }
-
-        li.active{
-
-              span{
-                 
-                
-                 background: red;                 
-                 border: 1px solid red;
-
-                 color:#fff;
-             }
-        }
-        
-        
+        } 
     }
   .use_list {
     display: flex;
@@ -188,7 +232,7 @@ export default {
     
       span {
           &.redColor{
-           background-color: #be0303;
+           background-color: #26a2ff;
             color: white;
           }
 
@@ -206,37 +250,13 @@ export default {
     }
   }
 }
-
-.satart {
-  position: fixed;
-
-  bottom: 5rem;
-
-  left: 50%;
-  margin-left: -3rem;
-
-  width: 6rem;
-
-  height: 6rem;
-
-  border-radius: 50%;
-
-  background: red;
-  background-image: radial-gradient(#f72323, #be0303, #f33737); //径向渐变
-  color: #fff;
-  
- 
-    span {
-      display: block;
-
-      width: 2rem;
-
-      margin: 0 auto;
-
-      position: relative;
-
-      top: 1.5rem;
-    }
-  
+.orderbtn{
+  // margin: 0 auto;
+  margin-top: 10rem;
+  position: relative;
+  left: 37%;
+  text-align: center;
 }
+
+
 </style>

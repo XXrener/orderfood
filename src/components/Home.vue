@@ -136,6 +136,7 @@ export default {
                 top: 0, 
                 behavior: "smooth" 
             });
+            this.flag = !this.flag
             // scroll.scrollTop = 0;
           break;
           case 1:
@@ -237,6 +238,7 @@ export default {
   mounted() {
      
       axios.get('/api/menu.json').then(res =>{  //获取本地JSON
+      console.log(res,"有没有获取到")
         if(res.data){
           this.listData = res.data.body.menulist
         }

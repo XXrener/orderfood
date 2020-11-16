@@ -20,10 +20,10 @@ const store = new Vuex.Store({
         changePeople(state,nums){   //用餐人数
             state.people = nums
         },
-        changeRemarks(state,text){ 
+        changeRemarks(state,text){ //备注
             state.remarks = text
         },
-        showMasking(state,masking){
+        showMasking(state,masking){//背景
             state.isShowMasking = masking;
         },
         menulocal(state,obj){   //购物车页添加菜品

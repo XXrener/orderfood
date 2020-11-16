@@ -41,7 +41,7 @@
             <button class="addcart" @click.stop="addCart">加入购物车</button>			
         </div>
 
-         <Masking></Masking>
+         <!-- <Masking></Masking> -->
     </div>
    
 </template>
@@ -49,6 +49,7 @@
 <script>
     import config from '../api/config'
     import axios from 'axios'
+    import { Toast } from 'mint-ui'
     export default {
         name:'pcontent',
         data(){
@@ -120,6 +121,14 @@
                 加入购物车
             */
            addCart(){
+               //消息提示
+               let instance =Toast({
+                    message: '已选',
+                    iconClass: 'icon icon-success'
+               });
+                    setTimeout(() => {
+                    instance.close();
+                    }, 1000);
                //桌子号 二维码获取 暂定值
                 console.log(this.cartlist)
                 let that = this;

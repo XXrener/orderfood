@@ -7,7 +7,7 @@
         <p>修改人数</p>
       </header>
 
-      <p class="notice">*请选择用餐人数 ，小二正在快马加鞭给你送餐具*</p>
+      <p class="notice">*请重新选择人数，小二正在快马加鞭给你送餐具*</p>
 
       <div class="satart_list">
         <ul class="use_list">
@@ -24,9 +24,9 @@
         <input
           type="text"
           v-model="p_mark"
-          placeholder="请输入您的口味要求，忌口等（可不填）"
+          
         />
-
+          <!-- placeholder="请输入您的口味要求，忌口等（可不填）" -->
         <ul class="mark_list">
           <li
             class="taste"
@@ -40,10 +40,10 @@
         </ul>
       </div>
       <div class="people">
-          <div class="btn" @click="change">
+          <div class="btn" @click="changeCancel">
             <span>取消</span>
         </div>
-        <div class="btn">
+        <div class="btn" @click="changeVerify">
             <span>确认</span>
         </div>
       </div>
@@ -64,25 +64,35 @@ export default {
       selections: false,
       nums: [1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12],
       select: 0,
-      taste: ["打包带走", "不要放辣椒", "微辣"],
-      p_mark: "",
-      p_num: "",
+      taste: ["打包带走", "不要放辣椒", "微辣","堂食","单身狗套餐"],
+      p_mark:this.$store.state.remarks
     };
   },
+  computed:{
+   
+  },
   methods: {
+    changeCancel(){
+      this.$router.go(-1)
+    },
+    changeVerify(){
+      this.$store.commit("changePeople", this.nums[this.select]);
+      this.$store.commit("changeRemarks", this.p_mark);
+      this.$router.go(-1)
+    },
     maxplayers(index) {
       //人数本地储存
       this.select = index;
-      this.$store.commit("changePeople", this.nums[index]); //当前数组下标 等于当前数组值
+      //当前数组下标 等于当前数组值
     },
-    satartOrder() {
+    /* satartOrder() {
       this.$router.push({ path: "home" });
-    },
+    }, */
     textOptions(index) {
       //口味选择
       let uid = index;
       this.p_mark += " " + this.$refs.index[uid].innerHTML.trim();
-      this.$store.commit("changeRemarks", this.p_mark);
+     
       console.log(this.p_mark);
     },
   },
@@ -193,7 +203,7 @@ export default {
 
       span {
         &.redColor {
-          background-color: #be0303;
+          background-color: #26a2ff;
           color: white;
         }
 
@@ -227,7 +237,7 @@ export default {
       color: #fff;
        text-align: center;
       letter-spacing: 0.3rem;
-      background-color: red;
+      background-color: #26a2ff;
        border-radius: .8rem;
      
       }
