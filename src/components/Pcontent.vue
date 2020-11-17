@@ -37,8 +37,8 @@
                 </div>								
             
             </div>
-            
-            <button class="addcart" @click.stop="addCart">加入购物车</button>			
+            <mu-bottom  class="addcart" @click.stop="addCart">加入购物车</mu-bottom>
+            <!-- <button>加入购物车</button>			 -->
         </div>
 
          <!-- <Masking></Masking> -->
@@ -359,9 +359,10 @@
       
         float: right;
       
-        background: red;
+        background: #2196f3;
         color: #fff;
         height: 3rem;
+        line-height: 3rem;
         border: none;
         padding: 0 .5rem;
         border-radius: .5rem;

@@ -35,7 +35,7 @@ import '@/assets/css/basic.scss'
 import store from './store/index'
 //按需引入Muse
 import 'muse-ui/lib/styles/base.less';
-import { AppBar, BottomNav, BottomSheet, Button, Carousel, Drawer, Grid, GridList, Icon, Paper, Select, SubHeader } from 'muse-ui';
+import { AppBar, BottomNav, BottomSheet, Button, Carousel, Drawer, Grid, GridList, Icon, List, Paper, Radio, Select, SubHeader, Switch } from 'muse-ui';
 import 'muse-ui/lib/styles/theme.less';
 // Vue.use(CredentialsContainer)
 Vue.use(SubHeader)
@@ -50,6 +50,9 @@ Vue.use(Icon)
 Vue.use(Drawer)
 Vue.use(BottomNav)
 Vue.use(BottomSheet)
+Vue.use(List)
+Vue.use(Switch)
+Vue.use(Radio)
 //字体引入
 import 'typeface-roboto'
 
@@ -58,8 +61,10 @@ import 'material-design-icons-iconfont/dist/material-design-icons.css'
 //  全局组件
 import NavFooter from './components/bottomMenu/NavFooter.vue'
 import Masking from './components/Masking/masking.vue'
+import BottomMenu from "./components/bottomMenu/bottomMenu.vue"
 Vue.component('NavFooter',NavFooter)
 Vue.component('Masking',Masking)
+Vue.component('BottomMenu',BottomMenu)
 new Vue({
   render: h => h(App),
   router,

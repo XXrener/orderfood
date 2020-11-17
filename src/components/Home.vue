@@ -19,63 +19,48 @@
       </nav>
     </header>
     <!-- 侧边栏分类菜单 -->
-    <!-- <mu-container>
-        <mu-flex justify-content="center" align-items="center">
-          <mu-switch style="margin-left: 16px" v-model="docked" label="docked"></mu-switch>
-          <mu-radio style="margin-left: 16px" v-model="position" value="left" label="left"></mu-radio>
-          <mu-radio style="margin-left: 16px" v-model="position" value="right" label="right"></mu-radio>
-          <mu-button color="primary" style="margin-left: 16px" @click="open = !open">
-            toggle
-          </mu-button>
-        </mu-flex>
-          <mu-drawer :open.sync="open" :docked="docked" :right="position === 'right'">
-            <mu-list>
-              <mu-list-item button>
-                <mu-list-item-title>Menu Item 1</mu-list-item-title>
-              </mu-list-item>
-              <mu-list-item button>
-                <mu-list-item-title>Menu Item 2</mu-list-item-title>
-              </mu-list-item>
-              <mu-list-item  @click="open = false" button>
-                <mu-list-item-title>Close</mu-list-item-title>
-              </mu-list-item>
-            </mu-list>
-          </mu-drawer>
-    </mu-container> -->
-    <aside class="left_cate" :class="{isCate:flag}">
-      <ul>
-        <li v-for=" (items,index) in listData"
-           :key="index" 
-           :ref="[optionsMenu==index?'redColor':null]"
-           @click="locationMenu(index)"
-           :class="[optionsMenu==index?'redColor':null]">
-          {{items.title}}
-        </li>
-      </ul>
-
-      <!-- 菜单按钮 -->
-      <mu-button class="nav_cate" icon slot="top" @click="openMenu">
-        <mu-icon value="favorite_border" color="#f44336"></mu-icon>
-            
-      </mu-button>
-      <!-- <div class="nav_cate" @click="openMenu">
-        <img :src="urlnav" />
-        <p>菜单</p>
-      </div> -->
-    </aside>
+  
+      <mu-drawer :open.sync="open" width="150">
+        <mu-list  class="asideMenu">
+          <mu-list-item button v-for=" (items,index) in listData" :key="items.id" @click="locationMenu(index)">
+            <mu-list-item-title>{{items.title}}</mu-list-item-title>
+          </mu-list-item>
+          <mu-list-item  @click="open = false; shift = 'home'" button>
+            <mu-list-item-title>返回</mu-list-item-title>
+          </mu-list-item>
+        </mu-list>
+      </mu-drawer>
 
     <!-- 内容区 -->
+      
     <div class="content" ref="content">
-      <div class="item" v-for=" (item,key) in listData" :key="key" :ref="item.id" >
-        <h3 ref="cartlist" class="item_cate" >
-           
-            <mu-appbar style="width: 100%;" title="Title">
-                 {{item.title}}
+      <nav  v-for=" (item,key) in listData" :key="key" :ref="item.id">
+          
+      <mu-grid-list class="gridlist">
+         <mu-appbar style="width: 100%;" title="Title" color='#2196f3'>
+              {{item.title}}
             </mu-appbar>
-        </h3>
-        <mu-grid-list class="gridlist-demo" :cols="2">
-          <!-- <mu-sub-header>December</mu-sub-header> -->
-          <mu-grid-tile v-for=" food in item.list" :key="food.id">
+        <!-- <mu-sub-header></mu-sub-header> -->
+        <mu-grid-tile class="gridname" v-for="food in item.list" :key="food.id">
+          <img :src="food.url_img" >
+          <span slot="title">{{food.name}}</span>
+          <span slot="subTitle">￥ <b>{{food.price}}</b></span>
+          <mu-button slot="action" icon :to="{name:'pcontent',query:{aid:food.aid,uid:food.uid }}">
+            <mu-icon value="star_border"></mu-icon>
+          </mu-button>
+        </mu-grid-tile>
+      </mu-grid-list>
+      </nav>
+     
+
+      
+      <!-- <div class="item" v-for=" (item,key) in listData" :key="key" :ref="item.id" >
+        <h3 ref="cartlist" class="item_cate" > 
+           
+        </h3> -->
+        <!-- <mu-grid-list class="gridlist-demo" :cols="2" v-for=" food in item.list" :key="food.id">
+          <mu-sub-header>December</mu-sub-header>
+          <mu-grid-tile >
              <mu-paper class="demo-paper" :z-depth="1">
                  <img :src="food.url_img" >
                   <span slot="title">{{food.name}}</span>
@@ -87,7 +72,7 @@
              </mu-paper>
            
           </mu-grid-tile>
-        </mu-grid-list>
+        </mu-grid-list> -->
         <!-- <ul class="item_list">
           <li >
             <router-link >
@@ -102,25 +87,16 @@
           </li>
 
         </ul> -->
-      </div>
+  <!--     </div> -->
     </div>
-   
-    <div class="footer_cart" style="positon:fixed;right:1.2rem;bottom:0rem;">
-      <span class="cartnum" v-if="isShowCartNum">{{totalnum}}</span>
-      <router-link to="/cart">
-        <img :src="urlcart" alt />
-        <p>购物车</p>
-      </router-link>
-    </div>
-    <NavFooter></NavFooter>
-    <!-- <Masking></Masking> -->
-    <!-- <mu-container>
-      <mu-bottom-nav shift="true">
-        <mu-bottom-nav-item title="菜单" icon="restore"></mu-bottom-nav-item>
-        <mu-bottom-nav-item title="主页" icon="favorite"></mu-bottom-nav-item>
-        <mu-bottom-nav-item title="购物车" icon="location_on"></mu-bottom-nav-item>
-      </mu-bottom-nav>
-    </mu-container> -->
+    <!-- <BottomMenu :openDraWer="openDraWer"></BottomMenu> -->
+     <mu-container style=" position:fixed; bottom:0;max-height:300px;width:100%;padding:0;z-index:9999 ">
+            <mu-bottom-nav :value.sync="shift" shift @change="opendrawer">
+                <mu-bottom-nav-item value="menu" title="分类" icon="restore" event="openDraWer"></mu-bottom-nav-item>
+                <mu-bottom-nav-item value="home" title="主页" icon="home"></mu-bottom-nav-item>
+                <mu-bottom-nav-item value="cart" title="购物车" icon="location_on" to="/cart"></mu-bottom-nav-item>
+            </mu-bottom-nav>
+        </mu-container>
   </div>  
 </template>
 
@@ -153,7 +129,10 @@ export default {
       optionsMenu:0, //点击菜单
       scroll:'',
       isShowCartNum:true, //购物车数量显示
-        //muse-ui 变量
+              
+      open: false,//muse-ui 变量
+      shift:"home"
+     
   
     };
   },
@@ -173,6 +152,16 @@ export default {
      }
   },
   methods: {
+      opendrawer(value){
+          this.shift = value
+          if(this.shift == 'menu'){ //菜单列表
+            this.open = !this.open
+          }
+      },
+      openDraWer(){
+          this.open = !this.open;
+          console.log("菜单组件")
+      },
       openMenu(){  //菜单预览
         this.flag = !this.flag
         // this.$store.commit('showMasking',this.flag)
@@ -188,41 +177,47 @@ export default {
                   top: 0, 
                   behavior: "smooth" 
               });
-              this.flag = !this.flag
+              this.open=!this.open
+              this.shift='home'
               // scroll.scrollTop = 0;
             break;
             case 1:
               window.scrollTo({ //平滑滚动
-                  top: 540, 
+                  top: 865, 
                   behavior: "smooth" 
               });
-              this.flag = !this.flag
+              this.open=!this.open
+              this.shift='home'
               console.log(scroll.scrollTop)
               break;
             case 2:
               window.scrollTo({ //平滑滚动
-                  top: 1173, 
+                  top: 2005, 
                   behavior: "smooth" 
               });
-              this.flag = !this.flag
+              this.open=!this.open
+              this.shift='home'
               console.log(scroll.scrollTop)
               // scroll.scrollTop = 1173;
               break;
             case 3:
               window.scrollTo({ //平滑滚动
-                  top: 1653, 
+                  top: 2786, 
                   behavior: "smooth" 
               });
-              this.flag = !this.flag
+              this.open=!this.open
+              this.shift='home'
               console.log(scroll.scrollTop)
               // scroll.scrollTop =1653;
               break;
             case 4:
               window.scrollTo({ //平滑滚动
-                  top:scroll.offsetHeight-scroll.clientHeight, 
+                  top:3518, 
                   behavior: "smooth" 
               });
-              this.flag = !this.flag
+              this.open=!this.open
+              this.shift='home'
+               console.log(scroll.scrollTop)
               // scroll.offsetHeight-scroll.clientHeight;
               // scroll.scrollTop = scroll.offsetHeight-scroll.clientHeight;
               break;
@@ -249,7 +244,7 @@ export default {
 };
 </script>
 
-<style lang="scss" scoped>
+<style lang="scss">
 #home {
   width: 100vw;
   height: 100vh;
@@ -276,12 +271,24 @@ export default {
           text-align: center;
           color: #FFF;
           font-size: 10px;
-         
+          
         }
       }
     }
   }
-
+  /**侧边菜单*/
+  .asideMenu{
+    padding-top:10rem;
+  }
+  .content{
+    padding: 2rem .5rem;
+    .gridlist{
+      padding: .2rem;
+      .gridname{
+        padding: .2rem;
+      }
+    }
+  }
   /*列表*/
   .item {
     .item_cate {
