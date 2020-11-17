@@ -73,10 +73,24 @@
                  {{item.title}}
             </mu-appbar>
         </h3>
+        <mu-grid-list class="gridlist-demo" :cols="2">
+          <!-- <mu-sub-header>December</mu-sub-header> -->
+          <mu-grid-tile v-for=" food in item.list" :key="food.id">
+             <mu-paper class="demo-paper" :z-depth="1">
+                 <img :src="food.url_img" >
+                  <span slot="title">{{food.name}}</span>
+                  <span slot="subTitle">￥ <b>{{food.price}}</b></span>
+                  <mu-button slot="action" icon :to="{name:'pcontent',query:{aid:food.aid,uid:food.uid }}">
+                    <mu-icon value="star_border"></mu-icon>
+                  </mu-button>
 
-        <ul class="item_list">
-          <li  v-for=" food in item.list" :key="food.id">
-            <router-link :to="{name:'pcontent',query:{aid:food.aid,uid:food.uid }}">
+             </mu-paper>
+           
+          </mu-grid-tile>
+        </mu-grid-list>
+        <!-- <ul class="item_list">
+          <li >
+            <router-link >
               <div class="inner">
                 <img :src="food.url_img" alt />
                 <p class="title">{{food.name}}</p>
@@ -87,7 +101,7 @@
             </router-link>
           </li>
 
-        </ul>
+        </ul> -->
       </div>
     </div>
    
@@ -139,10 +153,8 @@ export default {
       optionsMenu:0, //点击菜单
       scroll:'',
       isShowCartNum:true, //购物车数量显示
-      docked: true,    //muse-ui 变量
-      open: true,
-      position: 'left'
-
+        //muse-ui 变量
+  
     };
   },
   created(){
