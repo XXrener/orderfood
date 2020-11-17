@@ -65,7 +65,8 @@ export default {
 <style lang="scss" scoped>
 #order{
     /*@charset "utf-8";*/
-
+  width: 100vw;
+  height: 100vh;
 .order_content{
 
     margin: .5rem;

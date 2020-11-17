@@ -1,7 +1,7 @@
 <template>
   <div id="app">
     <!-- <Satart></Satart> -->
-    <transition :name="order">
+    <transition :name="order" mode="out-in" :duration="{ enter: 500, leave: 0 }">
       <router-view></router-view>
     </transition>
   </div>
@@ -36,7 +36,8 @@ export default {
 
 <style lang="scss">
 #app {
-  
+width: 100vw;
+height: 100vh;
 .slide-right-enter-active,
 .slide-right-leave-active,
 .slide-left-enter-active,
@@ -47,22 +48,22 @@ export default {
 }
  
 .slide-right-enter {
-  opacity: 0;
+  visibility: hidden; opacity: 0;
   transform: translateX(-100%);
 }
  
 .slide-right-leave-active {
-  opacity: 0;
+  visibility: hidden; opacity: 0;
   transform: translateX(100%);
 }
  
 .slide-left-enter {
-  opacity: 0;
+  visibility: hidden; opacity: 0;
   transform: translateX(100%);
 }
  
 .slide-left-leave-active {
-  opacity: 0;
+  visibility: hidden; opacity: 0;
   transform: translateX(-100%);
 
 }

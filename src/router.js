@@ -9,6 +9,8 @@ import Order from "./components/Order.vue"
 import Pcontent from "./components/Pcontent.vue"
 import Search from "./components/Search.vue"
 import SatartCopy from "./components/SatartCopy.vue"
+import likeTheFood from "./components/subpage/likeTheFood.vue"
+import historyCart from "./components/subpage/historyCart.vue"
 const router = new VueRouter({
     mode:'history',
     routes:[
@@ -89,7 +91,24 @@ const router = new VueRouter({
                 tier: 7
             }
         },
-        
+        {
+            name:'likeTheFood',
+            path: '/likeTheFood',
+            component: likeTheFood,
+            meta: {
+                title: '猜你喜欢',
+                tier: 8
+            }
+        },
+        {
+            name:'historyCart',
+            path: '/historyCart',
+            component: historyCart,
+            meta: {
+                title: '猜你喜欢',
+                tier: 8
+            }
+        },
         {
             path: '/*',
             redirect: '/satart'

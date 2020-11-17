@@ -156,7 +156,8 @@
 
 <style lang="scss" scoped>
 #pcontent{
-
+    width: 100vw;
+    height: 100vh;
     .back{
     
     

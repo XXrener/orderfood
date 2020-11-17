@@ -64,6 +64,20 @@
       <div class="hot_good">
         <h2>顾客常点菜系</h2>
         <div class="hot_good_list">
+        
+            <mu-paper class="swiper" :z-depth="13" :round="true">
+                <mu-carousel :hide-controls="true" :interval='5000'  >
+                    <mu-carousel-item v-for=" item in commonlist" :key="item.id">
+                        <img :src="item.url_img">
+                        <p>{{item.name}}</p>
+                    </mu-carousel-item>
+                </mu-carousel>
+         
+            </mu-paper>
+ 
+           
+          
+   <!--        
           <ul>
             <li>
               <div class="inner">
@@ -144,7 +158,7 @@
                 </p>
               </div>
             </li>
-          </ul>
+          </ul> -->
         </div>
       </div>
     </div>
@@ -172,7 +186,7 @@ import urledit from "../assets/images/edit.jpg";
 // 组件
 import BottomMenu from './bottomMenu/NavFooter' 
 
-// import axios from 'axios'
+import axios from 'axios'
 export default {
   name: "cart",
   data() {
@@ -185,7 +199,8 @@ export default {
       urledit,
       cartlist:this.$store.state.menulocal,//购物车列表
       people:this.$store.state.people,//用餐人数
-      remarks:this.$store.state.remarks
+      remarks:this.$store.state.remarks,//用餐备注
+      commonlist:[]
 
     };
   },
@@ -215,6 +230,9 @@ export default {
 
   },
   methods:{
+    changeURL(index){
+        console.log(index)
+    },
       changeNum(){
         console.log("2222222222")
         this.$router.push({path:"/SatartCopy"})
@@ -233,8 +251,12 @@ export default {
     },
   },
   mounted(){
-
-    
+      axios.get('/api/list.json').then(res =>{
+        console.log(res.data.list,"有没有")
+        this.commonlist = res.data.list
+      }).catch(err =>{
+        console.log(err,"没有找到菜单")
+      })
   }
 };
 </script>
@@ -418,8 +440,32 @@ export default {
     }
     .hot_good_list{
         background: #e2e2e2;
-        overflow-x: auto;
-        ul{
+        margin-bottom: 5rem;
+        /* .swiper{
+			width: 100%;
+			height: 40vh;
+			background-color: red;
+			overflow: hidden;
+			.mu-carousel{
+				.mu-carousel-indicators{
+					position: absolute;
+					bottom: -2rem;
+					left: 50%;
+					transform: translateX(-50%);
+					// background-color: #555;
+					button{
+						width: .8rem;
+						height:.8rem;
+						margin:.5rem;
+						border:1px #555 solid;
+					}
+				}
+			}
+			
+		} */
+        
+    
+        /* ul{
             display: flex;
             flex-wrap: nowrap;
             // border: 1px green solid;
@@ -457,7 +503,7 @@ export default {
                     }
                 }
             }
-        }
+        } */
     }
   }
 }
