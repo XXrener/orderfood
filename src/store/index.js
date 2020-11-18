@@ -14,7 +14,9 @@ const store = new Vuex.Store({
         isShowMasking:false,
         people:0,   //用餐人数
         menulocal:[],//菜单
-        remarks:''
+        remarks:'',
+        open:false,
+        namehome:'home'
     },
     mutations:{
         changePeople(state,nums){   //用餐人数
@@ -78,7 +80,13 @@ const store = new Vuex.Store({
                     }
                 }
             }
-        }
+        },
+        openShow(state,open){   //侧边栏
+            state.open = open;
+        }/* ,
+        namehome(state,home){   //按钮返回主键
+            state.namehome = home;
+        } */
     }
  })
 

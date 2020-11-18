@@ -1,11 +1,19 @@
 <template>
   <div id="btnMenu">
-        <mu-container style="max-height:300px;width:100%">
-            <mu-bottom-nav :value.sync="shift" shift @change="opendrawer">
-                <mu-bottom-nav-item value="menu" title="分类" icon="restore" @event="clickMenu"></mu-bottom-nav-item>
-                <mu-bottom-nav-item value="home" title="主页" icon="home"></mu-bottom-nav-item>
-                <mu-bottom-nav-item value="cart" title="购物车" icon="location_on"></mu-bottom-nav-item>
-            </mu-bottom-nav>
+        <mu-container class="gridlist">
+            <mu-button color="#2196f3"  @click="openshow">
+                <mu-icon top value="subject"></mu-icon>
+                列表
+            </mu-button> 
+            <mu-button color="#2196f3" to="/home">
+                <mu-icon top value="home"></mu-icon>
+                主页
+            </mu-button>
+            <mu-button color="#2196f3" to='/cart'>
+                <mu-icon top value="shopping_cart"></mu-icon>
+                购物车
+            </mu-button> 
+              
         </mu-container>
   </div>
 </template>
@@ -14,41 +22,55 @@ export default {
     name:"btnMenu",
     data(){
         return {
-            shift: 'home'
+            shift: 'home',
+            open:false
         }
     },
-    props:{
-        open:{
-            type:Boolean
-        }
+    watch:{
+
+    },
+    computed:{
+   
     },
     methods:{
-        opendrawer(value){
-            this.shift = value
-            console.log(value =='menu',"8888888888888")
-            if(value =='menu'){
-                this.$emit('openDraWer')
-            }
-            console.log(value,"000000000000")
-           
-        },
-        ssss(){
-            console.log("sssssssssssssssssssss")
-        },
-        clickMenu(){
-            console.log("888888888888888888888")
-        }
+       openshow(){
+           this.open =!this.open
+           this.$store.commit('openShow',this.open)
+           console.log("55555")
+       }
+    },
+    mounted(){
+        this.shift = 'home'
     }
-   
 }
 </script>
 
 <style lang="scss">
 #btnMenu{
-    position:fixed;
-    bottom: 0;
+    position:absolute;
+    bottom:0;
     left: 0;
     width: 100vw;
-    // height: 100vh;
+    .gridlist{
+        position:fixed; 
+        bottom:0;
+        max-height:5rem;
+        width:100%;
+        padding:0;
+        z-index:9999;
+        background-color: #2196f3; 
+        display: flex;
+
+        button{
+            flex: 1;
+            padding: .5rem;
+            height: 4rem;
+            // margin-left: .25rem;
+        }
+        a{
+            flex: 1;
+            height: 4rem;
+        }
+    }
 }
 </style>

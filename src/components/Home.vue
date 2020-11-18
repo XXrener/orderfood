@@ -3,14 +3,14 @@
     <header class="index_header">
       <nav>
         <ul class="index_list">
-            <mu-button icon slot="left" to="hotList">
+            <!-- <mu-button icon slot="left" to="hotList">
                     <mu-icon value="whatshot" color="#ff5722"></mu-icon>
                      热销榜
             </mu-button>
             <mu-button icon slot="left" to="historyCart">
                     <mu-icon value="restaurant" color="#ffcdd2"></mu-icon>
                      你点过的菜
-            </mu-button>
+            </mu-button> -->
             <mu-button icon slot="left" to="likeTheFood">
                     <mu-icon value="favorite_border" color="#f44336"></mu-icon>
                      猜你喜欢
@@ -20,12 +20,12 @@
     </header>
     <!-- 侧边栏分类菜单 -->
   
-      <mu-drawer :open.sync="open" width="150">
+      <mu-drawer :open.sync="openShow" width="120">
         <mu-list  class="asideMenu">
           <mu-list-item button v-for=" (items,index) in listData" :key="items.id" @click="locationMenu(index)">
             <mu-list-item-title>{{items.title}}</mu-list-item-title>
           </mu-list-item>
-          <mu-list-item  @click="open = false; shift = 'home'" button>
+          <mu-list-item  @click="locationMenu(5)" button>
             <mu-list-item-title>返回</mu-list-item-title>
           </mu-list-item>
         </mu-list>
@@ -51,52 +51,8 @@
         </mu-grid-tile>
       </mu-grid-list>
       </nav>
-     
-
-      
-      <!-- <div class="item" v-for=" (item,key) in listData" :key="key" :ref="item.id" >
-        <h3 ref="cartlist" class="item_cate" > 
-           
-        </h3> -->
-        <!-- <mu-grid-list class="gridlist-demo" :cols="2" v-for=" food in item.list" :key="food.id">
-          <mu-sub-header>December</mu-sub-header>
-          <mu-grid-tile >
-             <mu-paper class="demo-paper" :z-depth="1">
-                 <img :src="food.url_img" >
-                  <span slot="title">{{food.name}}</span>
-                  <span slot="subTitle">￥ <b>{{food.price}}</b></span>
-                  <mu-button slot="action" icon :to="{name:'pcontent',query:{aid:food.aid,uid:food.uid }}">
-                    <mu-icon value="star_border"></mu-icon>
-                  </mu-button>
-
-             </mu-paper>
-           
-          </mu-grid-tile>
-        </mu-grid-list> -->
-        <!-- <ul class="item_list">
-          <li >
-            <router-link >
-              <div class="inner">
-                <img :src="food.url_img" alt />
-                <p class="title">{{food.name}}</p>
-                <p class="price">
-                  <span>￥</span>{{food.price}}
-                </p>
-              </div>
-            </router-link>
-          </li>
-
-        </ul> -->
-  <!--     </div> -->
     </div>
-    <!-- <BottomMenu :openDraWer="openDraWer"></BottomMenu> -->
-     <mu-container style=" position:fixed; bottom:0;max-height:300px;width:100%;padding:0;z-index:9999 ">
-            <mu-bottom-nav :value.sync="shift" shift @change="opendrawer">
-                <mu-bottom-nav-item value="menu" title="分类" icon="restore" event="openDraWer"></mu-bottom-nav-item>
-                <mu-bottom-nav-item value="home" title="主页" icon="home"></mu-bottom-nav-item>
-                <mu-bottom-nav-item value="cart" title="购物车" icon="location_on" to="/cart"></mu-bottom-nav-item>
-            </mu-bottom-nav>
-        </mu-container>
+    <BottomMenu></BottomMenu>
   </div>  
 </template>
 
@@ -128,10 +84,9 @@ export default {
       flag:false,
       optionsMenu:0, //点击菜单
       scroll:'',
-      isShowCartNum:true, //购物车数量显示
-              
+      isShowCartNum:true, //购物车数量显示         
       open: false,//muse-ui 变量
-      shift:"home"
+      // openShow:this.$store.state.open
      
   
     };
@@ -149,23 +104,13 @@ export default {
          total += list.num
        }
        return total
+     },
+     openShow(){
+       return this.$store.state.open
      }
   },
   methods: {
-      opendrawer(value){
-          this.shift = value
-          if(this.shift == 'menu'){ //菜单列表
-            this.open = !this.open
-          }
-      },
-      openDraWer(){
-          this.open = !this.open;
-          console.log("菜单组件")
-      },
-      openMenu(){  //菜单预览
-        this.flag = !this.flag
-        // this.$store.commit('showMasking',this.flag)
-      },
+      
       locationMenu(index){
         this.optionsMenu = index;//按钮颜色
         this.$nextTick(()=>{
@@ -177,8 +122,9 @@ export default {
                   top: 0, 
                   behavior: "smooth" 
               });
-              this.open=!this.open
-              this.shift='home'
+              // this.open = !this.open
+              this.$store.commit('openShow',this.open)
+              
               // scroll.scrollTop = 0;
             break;
             case 1:
@@ -186,8 +132,9 @@ export default {
                   top: 865, 
                   behavior: "smooth" 
               });
-              this.open=!this.open
-              this.shift='home'
+              // this.open = !this.open
+              this.$store.commit('openShow',this.open)
+               
               console.log(scroll.scrollTop)
               break;
             case 2:
@@ -195,8 +142,9 @@ export default {
                   top: 2005, 
                   behavior: "smooth" 
               });
-              this.open=!this.open
-              this.shift='home'
+              // this.open = !this.open
+              this.$store.commit('openShow',this.open)
+               
               console.log(scroll.scrollTop)
               // scroll.scrollTop = 1173;
               break;
@@ -205,8 +153,9 @@ export default {
                   top: 2786, 
                   behavior: "smooth" 
               });
-              this.open=!this.open
-              this.shift='home'
+              // this.open = !this.open
+              this.$store.commit('openShow',this.open)
+               
               console.log(scroll.scrollTop)
               // scroll.scrollTop =1653;
               break;
@@ -215,11 +164,20 @@ export default {
                   top:3518, 
                   behavior: "smooth" 
               });
-              this.open=!this.open
-              this.shift='home'
+              // this.open = !this.open
+              this.$store.commit('openShow',this.open)
+              
                console.log(scroll.scrollTop)
-              // scroll.offsetHeight-scroll.clientHeight;
-              // scroll.scrollTop = scroll.offsetHeight-scroll.clientHeight;
+              break;
+            case 5:
+              window.scrollTo({ //平滑滚动
+                  top:0, 
+                  behavior: "smooth" 
+              });
+              // this.open = !this.open
+              this.$store.commit('openShow',this.open)
+              
+               console.log(scroll.scrollTop)
               break;
         }
 
@@ -280,10 +238,15 @@ export default {
   .asideMenu{
     padding-top:10rem;
   }
+  /**内容区*/
   .content{
     padding: 2rem .5rem;
+    box-sizing: border-box;
     .gridlist{
       padding: .2rem;
+      .mu-appbar-title{
+        padding: 0;
+      }
       .gridname{
         padding: .2rem;
       }

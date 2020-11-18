@@ -38,6 +38,7 @@ export default {
 #app {
 width: 100vw;
 height: 100vh;
+// padding: .2rem;
 .slide-right-enter-active,
 .slide-right-leave-active,
 .slide-left-enter-active,

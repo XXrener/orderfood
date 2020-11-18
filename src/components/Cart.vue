@@ -60,7 +60,7 @@
         </ul>
       </div>
 
-      <!-- 顾客常点菜系 -->
+    <!--   顾客常点菜系
       <div class="hot_good">
         <h2>顾客常点菜系</h2>
         <div class="hot_good_list">
@@ -74,7 +74,7 @@
                 </mu-carousel>
          
             </mu-paper>
- 
+  -->
            
           
    <!--        
@@ -159,20 +159,40 @@
               </div>
             </li>
           </ul> -->
-        </div>
-      </div>
+        <!-- </div>
+      </div> -->
     </div>
 
   
-    <BottomMenu></BottomMenu>
+ <div class="gridlist">
+      <div class="btncart">
+        <mu-button button  color="#2196f3" to="/order">
+          <mu-icon top value="subject"></mu-icon>
+          下单
+      </mu-button> 
+      </div>
+      <div class="btncart">
+        <mu-button  color="#2196f3" to="/home">
+          <mu-icon top value="home"></mu-icon>
+          主页
+      </mu-button>
+      </div>
+      <div class="btncart">
+        <mu-button  color="#2196f3" to='/cart'>
+          <mu-icon top value="shopping_cart"></mu-icon>
+          购物车
+      </mu-button> 
+      </div>
+        
+  </div>
    
 
-    <router-link to="/order">
+    <!-- <router-link to="/order">
       <div class="footer_cart">
         <img :src="urlcart" alt />
         <p>下单</p>
       </div>
-    </router-link>
+    </router-link> -->
   </div>
 </template>
 
@@ -184,7 +204,7 @@ import urlmenu from "../assets/images/menu.png";
 
 import urledit from "../assets/images/edit.jpg";
 // 组件
-import BottomMenu from './bottomMenu/NavFooter' 
+// import BottomMenu from './bottomMenu/NavFooter' 
 
 import axios from 'axios'
 export default {
@@ -203,9 +223,6 @@ export default {
       commonlist:[]
 
     };
-  },
-  components:{
-    BottomMenu
   },
   computed:{
       totalnum(){ //总数量
@@ -263,6 +280,8 @@ export default {
 
 <style lang="scss">
 #cart {
+  width: 100vw;
+  height: 100vh;
   .cart_content {
     padding: 1rem;
 
@@ -504,6 +523,32 @@ export default {
                 }
             }
         } */
+    }
+  }
+
+  // 底部按钮
+  .gridlist{
+    position: fixed;
+    bottom: 0;
+    height: 4rem;
+    width: 100vw;
+    background-color: #90caf9;
+    box-sizing: border-box;
+    display: flex;
+    justify-content:space-around;
+    align-items: center;
+    .btncart{
+      
+      display: flex;
+      align-items: center;
+      button{
+        height: 3.5rem;
+        align-items: center;
+      }
+      a{
+        height: 3.5rem;
+        align-items: center;
+      }
     }
   }
 }

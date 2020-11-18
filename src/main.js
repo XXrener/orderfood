@@ -35,7 +35,7 @@ import '@/assets/css/basic.scss'
 import store from './store/index'
 //按需引入Muse
 import 'muse-ui/lib/styles/base.less';
-import { AppBar, BottomNav, BottomSheet, Button, Carousel, Drawer, Grid, GridList, Icon, List, Paper, Radio, Select, SubHeader, Switch } from 'muse-ui';
+import { AppBar, AutoComplete, BottomNav, BottomSheet, Button, Carousel, Drawer, Grid, GridList, Icon, List, Paper, Radio, Select, SubHeader, Switch } from 'muse-ui';
 import 'muse-ui/lib/styles/theme.less';
 // Vue.use(CredentialsContainer)
 Vue.use(SubHeader)
@@ -53,6 +53,7 @@ Vue.use(BottomSheet)
 Vue.use(List)
 Vue.use(Switch)
 Vue.use(Radio)
+Vue.use(AutoComplete)
 //字体引入
 import 'typeface-roboto'
 

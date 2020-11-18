@@ -37,7 +37,7 @@
                 </div>								
             
             </div>
-            <mu-bottom  class="addcart" @click.stop="addCart">加入购物车</mu-bottom>
+            <mu-buttom  class="addcart" @click.stop="addCart">加入购物车</mu-buttom>
             <!-- <button>加入购物车</button>			 -->
         </div>
 

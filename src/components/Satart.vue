@@ -29,20 +29,24 @@
             </li>
            
         </ul>
-         
-      <!-- <div id="begin" class="satart">
-          <span>扫码点餐</span>
-      </div> -->
-      <mt-button  @click="camera =true"
+        <!--  <div class="">
+           选择桌子
+         </div>
+           <ul class="use_list">
+            <li v-for="(num,index) in tab" :key="index" @click="maxplayerss(index)">
+            <span :class="[select==index?'redColor':'']">{{num}}</span>
+          </li>
+           
+        </ul> -->
+       
+      <mt-button  @click="getCamera"
           type="primary"
           size="small"
           class="orderbtn"
-      >扫码点餐</mt-button>
-      <mt-actionsheet
-              :actions="actions"
-              v-model="camera">
-              扫码点餐
-            </mt-actionsheet>
+      >点餐</mt-button>
+      
+      
+         
     </div>
   </div>
 </template>
@@ -59,6 +63,7 @@ export default {
       urlcanju,
       selections:false,
       nums:[1,2,3,4,5,6,7,8,9,10,11,12],
+      tab:['a01','a02','a03','a04','a05','a06','a07','a08'],
       select:0,
       taste:['打包带走','不要放辣椒','微辣'],
       p_mark:'',
@@ -74,6 +79,9 @@ export default {
     maxplayers(index){  //人数本地储存
        this.select = index;
        this.$store.commit('changePeople',this.nums[index]) //当前数组下标 等于当前数组值
+    },
+    maxplayerss(){
+
     },
     satartOrder(){
       // this.$router.push({ path: 'home' })
@@ -219,8 +227,10 @@ export default {
 .orderbtn{
   // margin: 0 auto;
   margin-top: 10rem;
-  position: relative;
-  left: 37%;
+  position: absolute;
+  left: 50%;
+  top: -5rem;
+  transform: translateX(-50%);
   text-align: center;
 }
 
